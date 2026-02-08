@@ -58,7 +58,7 @@ public class PlayerJump : MonoBehaviour
             Vector2 jumpVector = Vector2.up * jumpStrength;
             player.FreezeMovement(wallJumpMovementFreezeTime);
 
-            rigidbody.AddForce(jumpVector); //, ForceMode2D.Impulse);
+            rigidbody.AddForce(jumpVector, ForceMode2D.Impulse);
         }
     }
 
