@@ -15,5 +15,6 @@ public class KillPlayer : MonoBehaviour
                 PlayerController.instance.LayerChange(new UnityEngine.InputSystem.InputAction.CallbackContext());
             }
         }
+
     }
 }
