@@ -6,11 +6,13 @@ public class KillPlayer : MonoBehaviour
     {
         if(collision.gameObject.name == "Player")
         {
-            collision.transform.position = PlayerController.instance.playerRespawnPoint;
+            PlayerController player = PlayerController.instance;
 
-            if(PlayerController.instance.gameObject.layer == 7)
+            collision.transform.position = player.playerRespawnPoint;
+
+            if(player.gameObject.layer != player.respawnLayer)
             {
-                PlayerController.instance.LayerChange(new UnityEngine.InputSystem.InputAction.CallbackContext());
+                player.LayerChange(new UnityEngine.InputSystem.InputAction.CallbackContext());
             }
         }
 

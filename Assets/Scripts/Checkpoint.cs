@@ -5,6 +5,8 @@ public class Checkpoint : MonoBehaviour
     public Color enabledColor;
     public Color disabledColor;
 
+    public int respawnLayer;
+
     SpriteRenderer spriteRenderer;
 
     // You can only collect a checkpoint 1 time
@@ -18,9 +20,12 @@ public class Checkpoint : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(enabled && collision.gameObject.name == "Player")
+        if(checkpointEnabled && collision.gameObject.name == "Player")
         {
-            PlayerController.instance.playerRespawnPoint = transform.position;
+            PlayerController player = PlayerController.instance;
+
+            player.playerRespawnPoint = transform.position;
+            player.respawnLayer = respawnLayer;
             
             spriteRenderer.color = disabledColor;
             checkpointEnabled = false;

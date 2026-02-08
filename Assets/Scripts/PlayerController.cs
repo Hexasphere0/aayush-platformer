@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
     public static PlayerController instance;
 
     [System.NonSerialized] public Vector2 playerRespawnPoint;
+    public int respawnLayer;
 
     void Awake()
     {
