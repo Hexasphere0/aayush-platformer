@@ -6,7 +6,7 @@ public class KillPlayer : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("COLLISION!!");
+        Debug.Log("COLLISION!! YAY!!!!!!");
         if(collision.gameObject.name == "Player")
         {
             collision.transform.position = playerRespawnPoint;

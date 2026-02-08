@@ -6,18 +6,14 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement Settings")]
     public float movementSpeed;
+    public float maxWalkingSpeed;
 
     [Header("Dash Settings")] // Broken needs to be fixed
     public float sprintStrength;
     public float sprintCooldown;
 
     [Header("Gravity Settings")]
-    public float hardFallGravityScale;
-    public float jumpCutGravityScale;
-    public float fallingGravityScale;
-    public float jumpHangGravityScale;
-    public float jumpGravityScale;
-    public float defaultGravityScale;
+    public Vector2 gravity;
 
     [Header("Grounded Settings")]
     public float groundedRaycastLength;
@@ -29,7 +25,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Clamp Settings")]
     public float maxFallSpeed;
-    public float maxMovementSpeed;
+    
+    [Header("Friction Settings")]
+    public float frictionAcceleration;
 
     [Header("Depricated")]
     public float groundedGraceDistance;
@@ -44,9 +42,6 @@ public class PlayerController : MonoBehaviour
 
     InputAction moveAction;
 
-    bool isJumpCut { get; set; }
-
-    float sprintTimer = 0;
     float layerChangeCooldownTime = 0f;
 
     void Start()
@@ -57,10 +52,6 @@ public class PlayerController : MonoBehaviour
         jump = GetComponent<PlayerJump>();
         
         moveAction = InputSystem.actions.FindAction("Move");
-        
-        InputSystem.actions.FindAction("Sprint").performed += PerformSprint;
-
-        SetGravityScale(defaultGravityScale);
     }
 
     void Update()
@@ -86,79 +77,30 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        sprintTimer += Time.fixedDeltaTime;
+        float dt = Time.fixedDeltaTime;
+
+        // Apply Friction
+        Vector2 friction = getFriction(frictionAcceleration, dt, rigidbody.linearVelocity);
+        rigidbody.AddForce(friction, ForceMode2D.Impulse);
 
         // Movement
         Vector2 moveValue = moveAction.ReadValue<Vector2>();
 
-        if(!movementFrozen){
-            Vector2 moveVector = new Vector2(moveValue.x, 0);
+        if(!movementFrozen && rigidbody.linearVelocityX * moveValue.x <= maxWalkingSpeed){
+            Vector2 moveVector = new Vector2(moveValue.x * movementSpeed, 0);
 
             rigidbody.AddForce(moveVector, ForceMode2D.Force);
+            rigidbody.AddForce(-friction * Mathf.Abs(moveValue.x), ForceMode2D.Impulse);
         }
 
         // Gravity
-        if(rigidbody.linearVelocityY < 0 && moveValue.y < 0)
-        {
-            SetGravityScale(hardFallGravityScale);
-        }
-        else if (jump.IsJumping())
-        {
-            SetGravityScale(jumpGravityScale);
-        }
-        // Half the players vertical velocity on releasing the jump button, allows for more precise jumps
-        else if (isJumpCut)
-        {
-            SetGravityScale(jumpCutGravityScale);
-        }
-        // Reduce the gravity at the top of the jump, allows for more air time
-        else if(jump.CanJumpHang())
-        {
-            SetGravityScale(jumpHangGravityScale);
-        }
-        // Make the player fall faster
-        else if(rigidbody.linearVelocityY < 0)
-        {
-            SetGravityScale(fallingGravityScale);
-        }
-        else
-        {
-            SetGravityScale(defaultGravityScale);
-        }
+        rigidbody.AddForce(gravity, ForceMode2D.Force);
         
         // Clamp Fall Speed
         rigidbody.linearVelocityY = Mathf.Max(rigidbody.linearVelocityY, -maxFallSpeed);
 
         // Clamp Movement Speed
         int direction = rigidbody.linearVelocityX > 0 ? 1 : -1;
-
-        rigidbody.linearVelocityX = direction * Mathf.Min(Mathf.Abs(rigidbody.linearVelocityX), maxMovementSpeed);
-
-        // Reset jump cut
-        if (IsGrounded()){
-            isJumpCut = false;
-        }
-    }
-
-    void SetGravityScale(float gravityScale)
-    {
-        rigidbody.gravityScale = gravityScale;
-    }
-
-
-
-    void PerformSprint(InputAction.CallbackContext context)
-    {
-        if(sprintTimer > sprintCooldown)
-        {
-            Debug.Log("Performing sprint");
-            sprintTimer = 0;
-
-            // bool facingRight = rigidbody.linearVelocityX > 0;
-            // int sprintDirection = facingRight ? 1 : -1;
-
-            rigidbody.AddForce(transform.forward * sprintStrength); //, ForceMode2D.Impulse);
-        }
     }
 
     public IEnumerator FreezeMovement(float seconds)
@@ -176,9 +118,9 @@ public class PlayerController : MonoBehaviour
         Vector3 raycastOrigin = transform.position + (Vector3) groundedRaycastOffset;
 
         // Debug Grounded Logic
-        // Debug.DrawRay(raycastOrigin, Vector2.down, Color.red);
-        // Debug.DrawRay(raycastOrigin + Vector3.right * groundedGraceDistance, Vector2.down, Color.red);
-        // Debug.DrawRay(raycastOrigin + Vector3.left * groundedGraceDistance, Vector2.down, Color.red);
+        Debug.DrawRay(raycastOrigin, Vector2.down, Color.red);
+        Debug.DrawRay(raycastOrigin + Vector3.right * groundedGraceDistance, Vector2.down, Color.red);
+        Debug.DrawRay(raycastOrigin + Vector3.left * groundedGraceDistance, Vector2.down, Color.red);
 
 
         return GroundedRaycastHit(raycastOrigin) ||
@@ -198,15 +140,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    Vector2 getFriction(float frictionAcceleration, float dt, Vector2 currentVelocity)
+    {
+        if(frictionAcceleration * dt > Mathf.Abs(currentVelocity.x))
+        {
+            return new Vector2(-currentVelocity.x, 0);
+        }
+        else
+        {
+            return new Vector2(-frictionAcceleration * dt * Mathf.Sign(currentVelocity.x), 0);
+
+        }
+    }
+
     bool GroundedRaycastHit(Vector3 origin)
     {
         RaycastHit2D hit = Physics2D.Raycast(origin, Vector3.down, groundedRaycastLength, 1 << gameObject.layer);
 
         return hit.collider != null;
-    }
-
-    public void SetJumpCut(bool jumpCut)
-    {
-        isJumpCut = jumpCut;
     }
 }
