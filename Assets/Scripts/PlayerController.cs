@@ -4,38 +4,45 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Movement")]
     public float movementSpeed;
+
+    [Header("Jump")]
     public float jumpStrength;
+    public float jumpHangVelocityTreshold;
     public float groundedRaycastLength;
+    public Vector2 groundedRaycastOffset;
+
+    [Header("Wall Jump")]
+    public Vector2 wallJumpForce;
     public float wallJumpRaycastLength;
+    public float wallJumpMovementFreezeTime;
+    public Vector2 wallJumpRaycastOffset;
+
+    [Header("Dash")] // Broken needs to be fixed
     public float sprintStrength;
     public float sprintCooldown;
 
+    [Header("Gravity")]
     public float hardFallGravityScale;
     public float jumpCutGravityScale;
     public float fallingGravityScale;
     public float jumpHangGravityScale;
     public float defaultGravityScale;
 
-    public float jumpHangVelocityTreshold;
-
-    public float wallJumpMovementFreezeTime;
-
-    public Vector2 groundedRaycastOffset;
-    public Vector2 wallJumpRaycastOffset;
-
+    [Header("Colors")]
     public Color redColor;
     public Color blueColor;
 
-    public Vector2 wallJumpForce;
-
+    [Header("Clamps")]
     public float maxFallSpeed;
     public float maxMovementSpeed;
 
+    [Header("Depricated")]
     public float groundedGraceDistance;
 
+    // Private Variables
     private bool movementFrozen { get; set; } = false;
-    float sprintTimer = 0;
 
     new Rigidbody2D rigidbody;
     SpriteRenderer spriteRenderer;
@@ -45,6 +52,7 @@ public class PlayerController : MonoBehaviour
 
     bool isJumpCut;
 
+    float sprintTimer = 0;
     float layerChangeCooldownTime = 0f;
 
 
