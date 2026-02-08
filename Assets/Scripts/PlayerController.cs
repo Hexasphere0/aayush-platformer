@@ -42,6 +42,8 @@ public class PlayerController : MonoBehaviour
     // Instance
     public static PlayerController instance;
 
+    [System.NonSerialized] public Vector2 playerRespawnPoint;
+
     void Awake()
     {
         if(instance == null)
