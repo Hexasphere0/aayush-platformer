@@ -1,9 +1,10 @@
-    using UnityEngine;
+using UnityEngine;
 
 public class HeadBumpJumpCancel : MonoBehaviour
 {
-    void OEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("HEADBUMP");
         PlayerJump.instance.cancelJump();
     }
 }
