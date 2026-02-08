@@ -37,8 +37,7 @@ public class PlayerController : MonoBehaviour
     PlayerJump jump;
 
     InputAction moveAction;
-
-    float layerChangeCooldownTime = 0f;
+    InputAction layerChangeAction;
 
     void Start()
     {
@@ -48,27 +47,9 @@ public class PlayerController : MonoBehaviour
         jump = GetComponent<PlayerJump>();
         
         moveAction = InputSystem.actions.FindAction("Move");
-    }
+        layerChangeAction = InputSystem.actions.FindAction("LayerChange");
 
-    void Update()
-    {   
-        layerChangeCooldownTime += Time.deltaTime;
-        // Swap Physics Layer *TEMPORARY!!*
-        if (Keyboard.current.leftShiftKey.isPressed && layerChangeCooldownTime > 0.4f)
-        {
-            layerChangeCooldownTime = 0f;
-            SwapPhysicsLayer();
-        }
-
-        // Color change based on layer
-        if(gameObject.layer == 6)
-        {
-            spriteRenderer.color = redColor;
-        }
-        else if(gameObject.layer == 7)
-        {
-            spriteRenderer.color = blueColor;
-        }
+        layerChangeAction.performed += LayerChange;
     }
 
     void FixedUpdate()
@@ -124,14 +105,16 @@ public class PlayerController : MonoBehaviour
             GroundedRaycastHit(raycastOrigin + Vector3.left * groundedGraceDistance);
     }
 
-    void SwapPhysicsLayer()
-    {
+    void LayerChange(InputAction.CallbackContext context)
+    {   
         if(gameObject.layer == 6)
         {
+            spriteRenderer.color = blueColor;
             gameObject.layer = 7;
         }
         else
         {
+            spriteRenderer.color = redColor;
             gameObject.layer = 6;
         }
     }
