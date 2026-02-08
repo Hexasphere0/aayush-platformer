@@ -67,6 +67,8 @@ public class PlayerController : MonoBehaviour
         layerChangeAction = InputSystem.actions.FindAction("LayerChange");
 
         layerChangeAction.performed += LayerChange;
+
+        playerRespawnPoint = transform.position;
     }
 
     void FixedUpdate()
