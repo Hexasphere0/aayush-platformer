@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Debug.DrawRay(transform.position + (Vector3) wallJumpRaycastOffset, Vector2.right, Color.red);
+        // Debug.DrawRay(transform.position + (Vector3) wallJumpRaycastOffset, Vector2.right, Color.red);
 
         if (jumpAction.WasReleasedThisFrame())
         {
@@ -212,9 +212,9 @@ public class PlayerController : MonoBehaviour
         Vector3 raycastOrigin = transform.position + (Vector3) groundedRaycastOffset;
 
         // Debug Grounded Logic
-        Debug.DrawRay(raycastOrigin, Vector2.down, Color.red);
-        Debug.DrawRay(raycastOrigin + Vector3.right * groundedGraceDistance, Vector2.down, Color.red);
-        Debug.DrawRay(raycastOrigin + Vector3.left * groundedGraceDistance, Vector2.down, Color.red);
+        // Debug.DrawRay(raycastOrigin, Vector2.down, Color.red);
+        // Debug.DrawRay(raycastOrigin + Vector3.right * groundedGraceDistance, Vector2.down, Color.red);
+        // Debug.DrawRay(raycastOrigin + Vector3.left * groundedGraceDistance, Vector2.down, Color.red);
 
 
         return GroundedRaycastHit(raycastOrigin) ||
