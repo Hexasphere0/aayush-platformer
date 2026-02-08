@@ -15,17 +15,27 @@ public class PlayerJump : MonoBehaviour
     public float wallJumpRaycastLength;
     public Vector2 wallJumpRaycastOffset;
 
+    [Header("Coyote Time")]
+    public float coyoteTime;
+    public float jumpInputBufferTime;
+
     // private variables
     new Rigidbody2D rigidbody;
     PlayerController player;
 
     InputAction jumpAction;
+    Vector2 gravity;
 
+    // Jump state variables
     bool jumpStarted = false;
     bool jumpCut = false;
     float jumpTime = 0;
     float currentJumpStrength;
-    Vector2 gravity;
+    
+    // Coyote time variables
+    float timeSinceCanJump = 0;
+    JumpType priorJumpType = JumpType.None; // 0 = regular, 1 = wall jump from left, 2 = wall jump from right
+    float timeSinceJumpInput = 0;
 
     public static PlayerJump instance;
 
@@ -47,7 +57,7 @@ public class PlayerJump : MonoBehaviour
         player = GetComponent<PlayerController>();
 
         jumpAction = InputSystem.actions.FindAction("Jump");
-        jumpAction.performed += StartJump;
+        jumpAction.performed += DetectJumpInput;
 
         gravity = player.gravity;
     }
@@ -55,6 +65,31 @@ public class PlayerJump : MonoBehaviour
     void FixedUpdate()
     {
         float dt = Time.fixedDeltaTime;
+
+        // Start a jump if jump input is detected within coyote time
+
+        timeSinceCanJump += dt;
+        timeSinceJumpInput += dt;
+        if (!jumpStarted)
+        {
+
+            JumpType jumpType = canJump();
+
+            if(jumpType != JumpType.None)
+            {
+                timeSinceCanJump = 0;
+                priorJumpType = jumpType;
+            }
+
+            if (timeSinceCanJump <= coyoteTime && timeSinceJumpInput <= jumpInputBufferTime && priorJumpType != JumpType.None)
+            {
+                Debug.Log("Jumped! " + priorJumpType);
+                
+                StartJump(priorJumpType);
+                priorJumpType = JumpType.None;
+                timeSinceJumpInput += jumpInputBufferTime + 1; // reset jump input timer so that buffered jump input is not used for multiple jumps
+            }
+        }
 
         // Add jump force while jump is held and max jump time is not reached
         if (jumpStarted)
@@ -82,47 +117,67 @@ public class PlayerJump : MonoBehaviour
         }
     }
 
-    void StartJump(InputAction.CallbackContext context)
+    void DetectJumpInput(InputAction.CallbackContext context)
     {   
+        
+        timeSinceJumpInput = 0;
+
+    }
+
+    void StartJump(JumpType jumpType)
+    {
+        // We cancel a jump before starting a new one to reset all jump state variables.
         CancelJump();
 
+        // Set jump state variables and reset vertical velocity to 0 to ensure consistent jump height regardless of current vertical velocity
+        jumpStarted = true;
+
+        if(rigidbody.linearVelocity.y < 0){
+            rigidbody.AddForce(new Vector2(0, -rigidbody.linearVelocity.y), ForceMode2D.Impulse);
+        }
+        
         // Normal Jump
-        if (player.IsGrounded())
+        if (jumpType == JumpType.Regular)
         {
-            jumpStarted = true;
-            
-            if(rigidbody.linearVelocity.y < 0){
-                rigidbody.AddForce(new Vector2(0, -rigidbody.linearVelocity.y), ForceMode2D.Impulse);
-            }
             currentJumpStrength = jumpStrength;
             return;
         }
         
         // Wall jump
-        if(Physics2D.Raycast(transform.position - (Vector3) wallJumpRaycastOffset, Vector2.left, wallJumpRaycastLength, 1 << gameObject.layer))
+
+        currentJumpStrength = wallJumpStrength.y;
+
+        // Apply horizontal wall jump force
+
+        if(jumpType == JumpType.WallLeft)
         {
-            jumpStarted = true;
-
-            if(rigidbody.linearVelocity.y < 0){
-                rigidbody.AddForce(new Vector2(0, -rigidbody.linearVelocity.y), ForceMode2D.Impulse);
-            }
-
-            currentJumpStrength = wallJumpStrength.y;
             rigidbody.AddForce(new Vector2(wallJumpStrength.x, 0), ForceMode2D.Impulse);
             return;
         }
-        else if(Physics2D.Raycast(transform.position + (Vector3) wallJumpRaycastOffset, Vector2.right, wallJumpRaycastLength, 1 << gameObject.layer))
+        else if(jumpType == JumpType.WallRight)
         {
-            jumpStarted = true;
-
-            if(rigidbody.linearVelocity.y < 0){
-                rigidbody.AddForce(new Vector2(0, -rigidbody.linearVelocity.y), ForceMode2D.Impulse);
-            }
-
-
-            currentJumpStrength = wallJumpStrength.y;
             rigidbody.AddForce(new Vector2(-wallJumpStrength.x, 0), ForceMode2D.Impulse);
             return;
+        }
+    }
+
+    JumpType canJump()
+    {
+        if(player.IsGrounded())
+        {
+            return JumpType.Regular;
+        }
+        else if(Physics2D.Raycast(transform.position - (Vector3) wallJumpRaycastOffset, Vector2.left, wallJumpRaycastLength, 1 << gameObject.layer))
+        {
+            return JumpType.WallLeft;
+        }
+        else if(Physics2D.Raycast(transform.position + (Vector3) wallJumpRaycastOffset, Vector2.right, wallJumpRaycastLength, 1 << gameObject.layer))
+        {
+            return JumpType.WallRight;
+        }
+        else
+        {
+            return JumpType.None;
         }
     }
 
@@ -141,4 +196,12 @@ public class PlayerJump : MonoBehaviour
     {
         return jumpAction.IsPressed();
     }
+}
+
+enum JumpType
+{
+    Regular,
+    WallLeft,
+    WallRight,
+    None = -1
 }
