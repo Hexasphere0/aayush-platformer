@@ -8,10 +8,6 @@ public class PlayerController : MonoBehaviour
     public float movementSpeed;
     public float maxWalkingSpeed;
 
-    [Header("Dash Settings")] // Broken needs to be fixed
-    public float sprintStrength;
-    public float sprintCooldown;
-
     [Header("Gravity Settings")]
     public Vector2 gravity;
 
