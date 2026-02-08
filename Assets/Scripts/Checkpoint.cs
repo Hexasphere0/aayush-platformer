@@ -7,6 +7,9 @@ public class Checkpoint : MonoBehaviour
 
     public int respawnLayer;
 
+    // win level on touch
+    public bool finalCheckpoint;
+
     SpriteRenderer spriteRenderer;
 
     // You can only collect a checkpoint 1 time
@@ -26,8 +29,14 @@ public class Checkpoint : MonoBehaviour
 
             player.playerRespawnPoint = transform.position;
             player.respawnLayer = respawnLayer;
-            
+
             spriteRenderer.color = disabledColor;
+
+            if (finalCheckpoint)
+            {
+                GameTimer.instance.StopTimer();
+            }
+
             checkpointEnabled = false;
         }
     }
