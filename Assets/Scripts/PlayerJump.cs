@@ -11,9 +11,8 @@ public class PlayerJump : MonoBehaviour
     public float maxJumpTime;
  
     [Header("Wall Jump")]
-    public Vector2 wallJumpForce;
+    public Vector2 wallJumpStrength;
     public float wallJumpRaycastLength;
-    public float wallJumpMovementFreezeTime;
     public Vector2 wallJumpRaycastOffset;
 
     // private variables
@@ -25,8 +24,10 @@ public class PlayerJump : MonoBehaviour
     bool jumpStarted = false;
     bool jumpCut = false;
     float jumpTime = 0;
+    float currentJumpStrength;
     Vector2 gravity;
 
+    Vector2 preJumpVelocity;
     
     void Start()
     {
@@ -42,22 +43,22 @@ public class PlayerJump : MonoBehaviour
     void FixedUpdate()
     {
         float dt = Time.fixedDeltaTime;
+        Vector2 addedJumpVelocity = rigidbody.linearVelocity - preJumpVelocity;
 
         // Add jump force while jump is held and max jump time is not reached
         if (jumpStarted)
         {
             if (jumpTime < maxJumpTime + jumpHoverTime && jumpAction.IsPressed())
             {
-                rigidbody.AddForce(Vector2.up * (jumpStrength * Mathf.Max(0, 1-jumpTime/maxJumpTime) + gravity.y * dt - rigidbody.linearVelocityY), ForceMode2D.Impulse);
+                rigidbody.AddForce(Vector2.up * (currentJumpStrength * Mathf.Max(0, 1-jumpTime/maxJumpTime) + gravity.y * dt - addedJumpVelocity.y), ForceMode2D.Impulse);
                 jumpTime += Time.fixedDeltaTime;
             }
             else
             {
                 
-                jumpStarted = false;
+                cancelJump();
                 jumpCut = true;
-                rigidbody.AddForce(Vector2.down * rigidbody.linearVelocityY * endJumpVelocityMultiplier, ForceMode2D.Impulse);
-                jumpTime = 0;
+                rigidbody.AddForce(Vector2.down * addedJumpVelocity.y * endJumpVelocityMultiplier, ForceMode2D.Impulse);
             }
         }
 
@@ -72,35 +73,45 @@ public class PlayerJump : MonoBehaviour
 
     void StartJump(InputAction.CallbackContext context)
     {   
-        // Wall jump
-        
-        if(Physics2D.Raycast(transform.position - (Vector3) wallJumpRaycastOffset, Vector2.left, wallJumpRaycastLength, 1 << gameObject.layer))
-        {
-            PerformWallJump(1);
-            return;
-        }
-        else if(Physics2D.Raycast(transform.position + (Vector3) wallJumpRaycastOffset, Vector2.right, wallJumpRaycastLength, 1 << gameObject.layer))
-        {
-            PerformWallJump(-1);
-            return;
-        }
-
-
+        cancelJump();
 
         // Normal Jump
         if (player.IsGrounded())
         {
             jumpStarted = true;
+            currentJumpStrength = jumpStrength;
+            return;
         }
+        
+        // Wall jump
+        Debug.Log("JUMPEFSLFDSFJKFDJSL");
+        if(Physics2D.Raycast(transform.position - (Vector3) wallJumpRaycastOffset, Vector2.left, wallJumpRaycastLength, 1 << gameObject.layer))
+        {
+            jumpStarted = true;
+            preJumpVelocity = rigidbody.linearVelocity;
+            currentJumpStrength = wallJumpStrength.y;
+            rigidbody.AddForce(new Vector2(wallJumpStrength.x, 0), ForceMode2D.Impulse);
+            return;
+        }
+        else if(Physics2D.Raycast(transform.position + (Vector3) wallJumpRaycastOffset, Vector2.right, wallJumpRaycastLength, 1 << gameObject.layer))
+        {
+            jumpStarted = true;
+            preJumpVelocity = rigidbody.linearVelocity;
+            currentJumpStrength = wallJumpStrength.y;
+            rigidbody.AddForce(new Vector2(-wallJumpStrength.x, 0), ForceMode2D.Impulse);
+            return;
+        }
+
+
+
+
     }
 
-    void PerformWallJump(int direction)
-    {
-        Debug.Log("WALLJUMP!");
-
-        Vector2 force = new Vector2(wallJumpForce.x * direction, wallJumpForce.y);
-
-        rigidbody.AddForce(force, ForceMode2D.Impulse);
+    public void cancelJump(){
+        jumpStarted = false;
+        jumpCut = false;
+        jumpTime = 0;
+        preJumpVelocity = rigidbody.linearVelocity;
     }
 
     public bool CanJumpHang ()

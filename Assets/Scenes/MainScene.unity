@@ -908,7 +908,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.6631565, y: -1.7658794, z: -10}
+  m_LocalPosition: {x: 3.6982925, y: -1.7658794, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2191,10 +2191,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200aa8cd9883d1540948fd1f499c8bf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  movementSpeed: 75
+  movementSpeed: 60
   maxWalkingSpeed: 12.5
-  sprintStrength: 0
-  sprintCooldown: 0
   gravity: {x: 0, y: -44}
   groundedRaycastLength: 0.125
   groundedRaycastOffset: {x: 0, y: -0.501}
@@ -2220,10 +2218,9 @@ MonoBehaviour:
   endJumpGravityMultiplier: 1
   endJumpVelocityMultiplier: 0.5
   maxJumpTime: 0.4
-  wallJumpForce: {x: 0, y: 0}
-  wallJumpRaycastLength: 0
-  wallJumpMovementFreezeTime: 0
-  wallJumpRaycastOffset: {x: 0, y: 0}
+  wallJumpStrength: {x: 15, y: 14}
+  wallJumpRaycastLength: 0.5
+  wallJumpRaycastOffset: {x: 0.501, y: 0}
 --- !u!1 &1558732001
 GameObject:
   m_ObjectHideFlags: 0
@@ -2969,7 +2966,7 @@ Transform:
   m_GameObject: {fileID: 1920047863}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.6631565, y: -1.7658794, z: -10}
+  m_LocalPosition: {x: 3.6982925, y: -1.7658794, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -11,5 +11,6 @@ public class KillPlayer : MonoBehaviour
         {
             collision.transform.position = playerRespawnPoint;
         }
+
     }
 }
