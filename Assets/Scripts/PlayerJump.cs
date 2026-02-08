@@ -28,6 +28,20 @@ public class PlayerJump : MonoBehaviour
     Vector2 gravity;
 
     Vector2 preJumpVelocity;
+
+    public static PlayerJump instance;
+
+    void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Debug.LogError("Multiple PlayerJumps!");
+        }
+    }
     
     void Start()
     {
