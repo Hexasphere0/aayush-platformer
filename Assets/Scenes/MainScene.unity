@@ -1520,6 +1520,7 @@ GameObject:
   - component: {fileID: 1493644124}
   - component: {fileID: 1493644123}
   - component: {fileID: 1493644121}
+  - component: {fileID: 1493644127}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -1540,9 +1541,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   movementSpeed: 1
-  jumpStrength: 38
-  groundedRaycastLength: 1.1
-  wallJumpRaycastLength: 0.2
   sprintStrength: 10
   sprintCooldown: 4
   hardFallGravityScale: 6
@@ -1550,13 +1548,10 @@ MonoBehaviour:
   fallingGravityScale: 3
   jumpHangGravityScale: 1.6
   defaultGravityScale: 2
-  jumpHangVelocityTreshold: 0.2
-  wallJumpMovementFreezeTime: 0.2
+  groundedRaycastLength: 1.1
   groundedRaycastOffset: {x: 0, y: -1}
-  wallJumpRaycastOffset: {x: 0.501, y: 0}
   redColor: {r: 0.9716981, g: 0.23104642, b: 0.068752214, a: 1}
   blueColor: {r: 0.28886467, g: 0.2688679, b: 1, a: 1}
-  wallJumpForce: {x: 2, y: 2}
   maxFallSpeed: 10
   maxMovementSpeed: 4.5
   groundedGraceDistance: 1
@@ -1698,6 +1693,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1493644127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493644120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66b93eaec43dfd74999e910b420f102a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerJump
+  jumpStrength: 38
+  jumpHangVelocityTreshold: 0.2
+  wallJumpForce: {x: 2, y: 2}
+  wallJumpRaycastLength: 0.2
+  wallJumpMovementFreezeTime: 0.2
+  wallJumpRaycastOffset: {x: 0.501, y: 0}
 --- !u!1 &1591798587
 GameObject:
   m_ObjectHideFlags: 0

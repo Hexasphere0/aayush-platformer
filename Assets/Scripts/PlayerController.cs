@@ -4,37 +4,29 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Movement")]
+    [Header("Movement Settings")]
     public float movementSpeed;
 
-    [Header("Jump")]
-    public float jumpStrength;
-    public float jumpHangVelocityTreshold;
-    public float groundedRaycastLength;
-    public Vector2 groundedRaycastOffset;
-
-    [Header("Wall Jump")]
-    public Vector2 wallJumpForce;
-    public float wallJumpRaycastLength;
-    public float wallJumpMovementFreezeTime;
-    public Vector2 wallJumpRaycastOffset;
-
-    [Header("Dash")] // Broken needs to be fixed
+    [Header("Dash Settings")] // Broken needs to be fixed
     public float sprintStrength;
     public float sprintCooldown;
 
-    [Header("Gravity")]
+    [Header("Gravity Settings")]
     public float hardFallGravityScale;
     public float jumpCutGravityScale;
     public float fallingGravityScale;
     public float jumpHangGravityScale;
     public float defaultGravityScale;
 
-    [Header("Colors")]
+    [Header("Grounded Settings")]
+    public float groundedRaycastLength;
+    public Vector2 groundedRaycastOffset;
+
+    [Header("Color Settings")]
     public Color redColor;
     public Color blueColor;
 
-    [Header("Clamps")]
+    [Header("Clamp Settings")]
     public float maxFallSpeed;
     public float maxMovementSpeed;
 
@@ -47,38 +39,31 @@ public class PlayerController : MonoBehaviour
     new Rigidbody2D rigidbody;
     SpriteRenderer spriteRenderer;
 
-    InputAction moveAction;
-    InputAction jumpAction;
+    PlayerJump jump;
 
-    bool isJumpCut;
+    InputAction moveAction;
+
+    bool isJumpCut { get; set; }
 
     float sprintTimer = 0;
     float layerChangeCooldownTime = 0f;
-
 
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        jump = GetComponent<PlayerJump>();
         
         moveAction = InputSystem.actions.FindAction("Move");
-        jumpAction = InputSystem.actions.FindAction("Jump");
         
-        jumpAction.performed += PerformJump;
         InputSystem.actions.FindAction("Sprint").performed += PerformSprint;
 
         SetGravityScale(defaultGravityScale);
     }
 
     void Update()
-    {
-        // Debug.DrawRay(transform.position + (Vector3) wallJumpRaycastOffset, Vector2.right, Color.red);
-
-        if (jumpAction.WasReleasedThisFrame())
-        {
-            isJumpCut = true;
-        }
-        
+    {   
         layerChangeCooldownTime += Time.deltaTime;
         // Swap Physics Layer *TEMPORARY!!*
         if (Keyboard.current.leftShiftKey.isPressed && layerChangeCooldownTime > 0.4f)
@@ -96,7 +81,6 @@ public class PlayerController : MonoBehaviour
         {
             spriteRenderer.color = blueColor;
         }
-
     }
 
     void FixedUpdate()
@@ -123,7 +107,7 @@ public class PlayerController : MonoBehaviour
             SetGravityScale(jumpCutGravityScale);
         }
         // Reduce the gravity at the top of the jump, allows for more air time
-        else if(jumpAction.IsPressed() && Mathf.Abs(rigidbody.linearVelocityY) <= jumpHangVelocityTreshold)
+        else if(jump.CanJumpHang())
         {
             SetGravityScale(jumpHangGravityScale);
         }
@@ -156,31 +140,7 @@ public class PlayerController : MonoBehaviour
         rigidbody.gravityScale = gravityScale;
     }
 
-    void PerformJump(InputAction.CallbackContext context)
-    {   
-        // Wall jump
-        if(Physics2D.Raycast(transform.position - (Vector3) wallJumpRaycastOffset, Vector2.left, wallJumpRaycastLength, 1 << gameObject.layer))
-        {
-            PerformWallJump(1);
-            return;
-        }
-        else if(Physics2D.Raycast(transform.position + (Vector3) wallJumpRaycastOffset, Vector2.right, wallJumpRaycastLength, 1 << gameObject.layer))
-        {
-            PerformWallJump(-1);
-            return;
-        }
 
-        // Normal Jump
-        if (IsGrounded())
-        {
-            Debug.Log("JUMPING");
-            Vector2 jumpVector = Vector2.up * jumpStrength;
-            FreezeMovement(wallJumpMovementFreezeTime);
-
-            rigidbody.AddForce(jumpVector); //, ForceMode2D.Impulse);
-        }
-
-    }
 
     void PerformSprint(InputAction.CallbackContext context)
     {
@@ -196,7 +156,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    IEnumerator FreezeMovement(float seconds)
+    public IEnumerator FreezeMovement(float seconds)
     {
         movementFrozen = true;
         while(true){
@@ -206,16 +166,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void PerformWallJump(int direction)
-    {
-        Debug.Log("WALLJUMP!");
-
-        Vector2 force = new Vector2(wallJumpForce.x * direction, wallJumpForce.y);
-
-        rigidbody.AddForce(force, ForceMode2D.Impulse);
-    }
-
-    bool IsGrounded()
+    public bool IsGrounded()
     {
         Vector3 raycastOrigin = transform.position + (Vector3) groundedRaycastOffset;
 
@@ -247,5 +198,10 @@ public class PlayerController : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(origin, Vector3.down, groundedRaycastLength, 1 << gameObject.layer);
 
         return hit.collider != null;
+    }
+
+    public void SetJumpCut(bool jumpCut)
+    {
+        isJumpCut = jumpCut;
     }
 }
