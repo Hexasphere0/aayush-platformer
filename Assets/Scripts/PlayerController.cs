@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Debug.Log("Multiple PlayerControllers!");
+            Debug.LogError("Multiple PlayerControllers!");
         }
     }
 
