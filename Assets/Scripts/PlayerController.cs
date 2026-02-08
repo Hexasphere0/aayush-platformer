@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public float jumpCutGravityScale;
     public float fallingGravityScale;
     public float jumpHangGravityScale;
+    public float jumpGravityScale;
     public float defaultGravityScale;
 
     [Header("Grounded Settings")]
@@ -100,6 +101,10 @@ public class PlayerController : MonoBehaviour
         if(rigidbody.linearVelocityY < 0 && moveValue.y < 0)
         {
             SetGravityScale(hardFallGravityScale);
+        }
+        else if (jump.IsJumping())
+        {
+            SetGravityScale(jumpGravityScale);
         }
         // Half the players vertical velocity on releasing the jump button, allows for more precise jumps
         else if (isJumpCut)

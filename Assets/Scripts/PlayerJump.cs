@@ -75,4 +75,9 @@ public class PlayerJump : MonoBehaviour
     {
         return jumpAction.IsPressed() && Mathf.Abs(rigidbody.linearVelocityY) <= jumpHangVelocityTreshold;
     }
+
+    public bool IsJumping()
+    {
+        return jumpAction.IsPressed();
+    }
 }
