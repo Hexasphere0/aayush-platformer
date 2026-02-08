@@ -38,6 +38,21 @@ public class PlayerController : MonoBehaviour
 
     InputAction moveAction;
     InputAction layerChangeAction;
+    
+    // Instance
+    public static PlayerController instance;
+
+    void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Debug.Log("Multiple PlayerControllers!");
+        }
+    }
 
     void Start()
     {
@@ -105,7 +120,7 @@ public class PlayerController : MonoBehaviour
             GroundedRaycastHit(raycastOrigin + Vector3.left * groundedGraceDistance);
     }
 
-    void LayerChange(InputAction.CallbackContext context)
+    public void LayerChange(InputAction.CallbackContext context)
     {   
         if(gameObject.layer == 6)
         {
