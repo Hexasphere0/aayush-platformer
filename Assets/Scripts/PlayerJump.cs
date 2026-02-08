@@ -70,7 +70,7 @@ public class PlayerJump : MonoBehaviour
             else
             {
                 
-                cancelJump();
+                CancelJump();
                 jumpCut = true;
                 rigidbody.AddForce(Vector2.down * addedJumpVelocity.y * endJumpVelocityMultiplier, ForceMode2D.Impulse);
             }
@@ -87,7 +87,7 @@ public class PlayerJump : MonoBehaviour
 
     void StartJump(InputAction.CallbackContext context)
     {   
-        cancelJump();
+        CancelJump();
 
         // Normal Jump
         if (player.IsGrounded())
@@ -115,13 +115,9 @@ public class PlayerJump : MonoBehaviour
             rigidbody.AddForce(new Vector2(-wallJumpStrength.x, 0), ForceMode2D.Impulse);
             return;
         }
-
-
-
-
     }
 
-    public void cancelJump(){
+    public void CancelJump(){
         jumpStarted = false;
         jumpCut = false;
         jumpTime = 0;
