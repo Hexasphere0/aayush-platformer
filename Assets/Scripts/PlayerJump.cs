@@ -83,7 +83,6 @@ public class PlayerJump : MonoBehaviour
 
             if (timeSinceCanJump <= coyoteTime && timeSinceJumpInput <= jumpInputBufferTime && priorJumpType != JumpType.None)
             {
-                Debug.Log("Jumped! " + priorJumpType);
                 
                 StartJump(priorJumpType);
                 priorJumpType = JumpType.None;
