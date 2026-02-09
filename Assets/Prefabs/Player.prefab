@@ -175,7 +175,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.9716981, g: 0.23104642, b: 0.068752214, a: 1}
@@ -282,6 +282,7 @@ MonoBehaviour:
   maxFallSpeed: 56.5
   frictionAcceleration: 125
   groundedGraceDistance: 0
+  respawnLayer: 0
 --- !u!114 &3810747589444066509
 MonoBehaviour:
   m_ObjectHideFlags: 0
