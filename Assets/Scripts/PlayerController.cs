@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     // Instance
     public static PlayerController instance;
 
-    [System.NonSerialized] public Vector2 playerRespawnPoint;
+    [System.NonSerialized] public Vector2 respawnPoint;
     public int respawnLayer;
 
     void Awake()
@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
 
         layerChangeAction.performed += LayerChange;
 
-        playerRespawnPoint = transform.position;
+        respawnPoint = transform.position;
     }
 
     void FixedUpdate()
@@ -157,5 +157,15 @@ public class PlayerController : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(origin, Vector3.down, groundedRaycastLength, 1 << gameObject.layer);
 
         return hit.collider != null;
+    }
+
+    public void Respawn()
+    {
+        transform.position = respawnPoint;
+
+        if(gameObject.layer != respawnLayer)
+        {
+            LayerChange(new UnityEngine.InputSystem.InputAction.CallbackContext());
+        }
     }
 }

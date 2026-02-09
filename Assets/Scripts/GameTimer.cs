@@ -1,12 +1,13 @@
 using UnityEngine;
 using TMPro;
+using System.Threading;
 
 public class GameTimer : MonoBehaviour
 {
     TMP_Text text;
 
     float time;
-    bool timerRunning  = true;
+    bool timerRunning = true;
 
     public static GameTimer instance;
 
@@ -36,6 +37,11 @@ public class GameTimer : MonoBehaviour
     public void StopTimer()
     {
         timerRunning = false;
+    }
+
+    public void Restart()
+    {
+        time = 0;
     }
 
     void Update()

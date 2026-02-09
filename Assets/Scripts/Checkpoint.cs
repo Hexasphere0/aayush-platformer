@@ -27,7 +27,7 @@ public class Checkpoint : MonoBehaviour
         {
             PlayerController player = PlayerController.instance;
 
-            player.playerRespawnPoint = transform.position;
+            player.respawnPoint = transform.position;
             player.respawnLayer = respawnLayer;
 
             spriteRenderer.color = disabledColor;
