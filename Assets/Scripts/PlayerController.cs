@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     // Instance
     public static PlayerController instance;
 
+    Vector2 initialRespawnPoint;
     [System.NonSerialized] public Vector2 respawnPoint;
     public int respawnLayer;
 
@@ -70,6 +71,7 @@ public class PlayerController : MonoBehaviour
         layerChangeAction.performed += LayerChange;
 
         respawnPoint = transform.position;
+        initialRespawnPoint = transform.position;
     }
 
     void FixedUpdate()
@@ -162,6 +164,17 @@ public class PlayerController : MonoBehaviour
     public void Respawn()
     {
         transform.position = respawnPoint;
+
+        if(gameObject.layer != respawnLayer)
+        {
+            LayerChange(new UnityEngine.InputSystem.InputAction.CallbackContext());
+        }
+    }
+
+    // Respawn from the start of the level
+    public void HardRespawn()
+    {
+        transform.position = initialRespawnPoint;
 
         if(gameObject.layer != respawnLayer)
         {

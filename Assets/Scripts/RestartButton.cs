@@ -14,6 +14,6 @@ public class RestartButton : MonoBehaviour
     public void Restart()
     {
         gameTimer.Restart();
-        playerController.Respawn();
+        playerController.HardRespawn();
     }
 }
