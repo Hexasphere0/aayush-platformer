@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1809290196288635825}
   - component: {fileID: 5357159915031662414}
   - component: {fileID: 7651523650921354951}
+  - component: {fileID: -1592827657906063336}
   m_Layer: 6
   m_Name: Moving Platform
   m_TagString: Untagged
@@ -154,3 +155,17 @@ MonoBehaviour:
   leftPosition: {x: 20, y: 1}
   rightPosition: {x: 23, y: 1}
   timeBetweenDestinations: 2
+--- !u!114 &-1592827657906063336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3976366607302597935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d22575d15258574187e880db273728c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelBlockEditor
+  redColor: {r: 0.9716981, g: 0.23104642, b: 0.068752214, a: 1}
+  blueColor: {r: 0.28886467, g: 0.2688679, b: 1, a: 1}

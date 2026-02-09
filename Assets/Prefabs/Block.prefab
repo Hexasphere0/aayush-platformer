@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8634136174527371724}
   - component: {fileID: 8117634243669487820}
   - component: {fileID: 373265871045030277}
+  - component: {fileID: -3581372628855275695}
   m_Layer: 6
   m_Name: Block
   m_TagString: Untagged
@@ -138,3 +139,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-3581372628855275695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4036393973559736596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d22575d15258574187e880db273728c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelBlockEditor
+  redColor: {r: 0.9716981, g: 0.23104642, b: 0.068752214, a: 1}
+  blueColor: {r: 0.28886467, g: 0.2688679, b: 1, a: 1}
