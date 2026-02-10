@@ -6823,6 +6823,10 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3810747589444066509, guid: fe318fdc8da3feb44a9de5862f00e38d, type: 3}
+      propertyPath: wallJumpMovementFreezeTime
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 4141382330534192671, guid: fe318fdc8da3feb44a9de5862f00e38d, type: 3}
       propertyPath: m_Name
       value: Player

@@ -14,6 +14,7 @@ public class PlayerJump : MonoBehaviour
     public Vector2 wallJumpStrength;
     public float wallJumpRaycastLength;
     public Vector2 wallJumpRaycastOffset;
+    public float wallJumpMovementFreezeTime;
 
     [Header("Coyote Time")]
     public float coyoteTime;
@@ -36,6 +37,10 @@ public class PlayerJump : MonoBehaviour
     float timeSinceCanJump = 0;
     JumpType priorJumpType = JumpType.None; // 0 = regular, 1 = wall jump from left, 2 = wall jump from right
     float timeSinceJumpInput = 0;
+
+    // Neutral Jump Prevention
+    float wallJumpXCoordinate = 0;
+    JumpType lastExecutedJumpType = JumpType.None;
 
     public static PlayerJump instance;
 
@@ -79,6 +84,12 @@ public class PlayerJump : MonoBehaviour
             {
                 timeSinceCanJump = 0;
                 priorJumpType = jumpType;
+            }
+
+            if(jumpType == JumpType.Regular){
+                // Reset wall jump state variables when landing on the ground to allow wall jumps again
+                lastExecutedJumpType = JumpType.None;
+                wallJumpXCoordinate = -1000000000;
             }
 
             if (timeSinceCanJump <= coyoteTime && timeSinceJumpInput <= jumpInputBufferTime && priorJumpType != JumpType.None)
@@ -128,6 +139,14 @@ public class PlayerJump : MonoBehaviour
         // We cancel a jump before starting a new one to reset all jump state variables.
         CancelJump();
 
+        if(jumpType != JumpType.Regular && lastExecutedJumpType == jumpType && Mathf.Abs(rigidbody.position.x - wallJumpXCoordinate) < wallJumpRaycastLength + 0.3f)
+        {
+            // Prevent repeated jumps on the same wall by checking if the player is trying to wall jump in the same direction within a short distance from the last wall jump
+            return;
+
+        }
+
+        lastExecutedJumpType = jumpType;
         // Set jump state variables and reset vertical velocity to 0 to ensure consistent jump height regardless of current vertical velocity
         jumpStarted = true;
 
@@ -147,6 +166,10 @@ public class PlayerJump : MonoBehaviour
         currentJumpStrength = wallJumpStrength.y;
 
         // Apply horizontal wall jump force
+    
+
+        wallJumpXCoordinate = rigidbody.position.x;
+
 
         if(jumpType == JumpType.WallLeft)
         {

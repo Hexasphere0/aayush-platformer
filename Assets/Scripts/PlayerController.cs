@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
 
     // Private Variables
     private bool movementFrozen { get; set; } = false;
+    private bool leftMovementFrozen { get; set; } = false;
+    private bool rightMovementFrozen { get; set; } = false;
 
     new Rigidbody2D rigidbody;
     SpriteRenderer spriteRenderer;
@@ -86,6 +88,18 @@ public class PlayerController : MonoBehaviour
         Vector2 moveValue = moveAction.ReadValue<Vector2>();
 
         if(!movementFrozen && rigidbody.linearVelocityX * moveValue.x <= maxWalkingSpeed){
+            
+            if(leftMovementFrozen && moveValue.x < 0)
+            {
+                moveValue.x = 0;
+
+            }
+            if(rightMovementFrozen && moveValue.x > 0)
+            {
+                moveValue.x = 0;
+            }
+
+
             Vector2 moveVector = new Vector2(moveValue.x * movementSpeed, 0);
 
             rigidbody.AddForce(moveVector, ForceMode2D.Force);
@@ -110,6 +124,29 @@ public class PlayerController : MonoBehaviour
 
             movementFrozen = false;
         }
+    }
+
+    public IEnumerator FreezeLeftMovement(float seconds)
+    {
+        leftMovementFrozen = true;
+
+        
+
+        yield return new WaitForSeconds(seconds);
+
+        leftMovementFrozen = false;
+
+    }
+    public IEnumerator FreezeRightMovement(float seconds)
+    {
+        
+        rightMovementFrozen = true;
+
+        
+
+        yield return new WaitForSeconds(seconds);
+
+        rightMovementFrozen = false;
     }
 
     public bool IsGrounded()
