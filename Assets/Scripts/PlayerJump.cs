@@ -172,12 +172,24 @@ public class PlayerJump : MonoBehaviour
         if (jumpType == JumpType.Regular)
         {
             currentJumpStrength = jumpStrength;
+
+            if(timeSinceClip <= clipJumpVelocityAdditionTime)
+            {
+                currentJumpStrength *= verticalPostClipVelocityMultiplier;
+            }
+
             return;
         }
         
         // Wall jump
 
         currentJumpStrength = wallJumpStrength.y;
+
+        float horizontalJumpStrength = wallJumpStrength.x;
+        if(timeSinceClip <= clipJumpVelocityAdditionTime)
+        {
+            horizontalJumpStrength *= horizontalPostClipVelocityMultiplier;
+        }
 
         // Apply horizontal wall jump force
     
@@ -187,14 +199,22 @@ public class PlayerJump : MonoBehaviour
 
         if(jumpType == JumpType.WallLeft)
         {
-            rigidbody.AddForce(new Vector2(wallJumpStrength.x, 0), ForceMode2D.Impulse);
+
+            
+            rigidbody.AddForce(new Vector2(horizontalJumpStrength, 0), ForceMode2D.Impulse);
             return;
         }
         else if(jumpType == JumpType.WallRight)
         {
-            rigidbody.AddForce(new Vector2(-wallJumpStrength.x, 0), ForceMode2D.Impulse);
+            rigidbody.AddForce(new Vector2(-horizontalJumpStrength, 0), ForceMode2D.Impulse);
             return;
         }
+    }
+
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        timeSinceClip = 0;
     }
 
     JumpType canJump()
