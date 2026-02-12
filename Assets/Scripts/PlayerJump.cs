@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerJump : MonoBehaviour
 {
+    
+    
     [Header("Jump Settings")]
     public float jumpStrength;
     public float jumpHoverTime;
@@ -20,10 +22,14 @@ public class PlayerJump : MonoBehaviour
     public float coyoteTime;
     public float jumpInputBufferTime;
 
+    [Header("Clip Jump Velocity Addition")]
+    public float clipJumpVelocityAdditionTime;
+    public float verticalPostClipVelocityMultiplier;
+    public float horizontalPostClipVelocityMultiplier;
+
     // private variables
     new Rigidbody2D rigidbody;
     PlayerController player;
-
     InputAction jumpAction;
     Vector2 gravity;
 
@@ -41,6 +47,11 @@ public class PlayerJump : MonoBehaviour
     // Neutral Jump Prevention
     float wallJumpXCoordinate = 0;
     JumpType lastExecutedJumpType = JumpType.None;
+
+    // Clip Jump Variables
+    float timeSinceClip = 0;
+
+
 
     public static PlayerJump instance;
 
@@ -75,6 +86,8 @@ public class PlayerJump : MonoBehaviour
 
         timeSinceCanJump += dt;
         timeSinceJumpInput += dt;
+        timeSinceClip += dt;
+
         if (!jumpStarted)
         {
 
@@ -95,9 +108,15 @@ public class PlayerJump : MonoBehaviour
             if (timeSinceCanJump <= coyoteTime && timeSinceJumpInput <= jumpInputBufferTime && priorJumpType != JumpType.None)
             {
                 
-                StartJump(priorJumpType);
-                priorJumpType = JumpType.None;
-                timeSinceJumpInput += jumpInputBufferTime + 1; // reset jump input timer so that buffered jump input is not used for multiple jumps
+                if(!(priorJumpType != JumpType.Regular && lastExecutedJumpType == priorJumpType && Mathf.Abs(rigidbody.position.x - wallJumpXCoordinate) < wallJumpRaycastLength + 0.3f))
+                {
+                    // Prevent repeated jumps on the same wall by checking if the player is trying to wall jump in the same direction within a short distance from the last wall jump
+ 
+                    StartJump(priorJumpType);
+                    priorJumpType = JumpType.None;
+                    timeSinceJumpInput += jumpInputBufferTime + 1; // reset jump input timer so that buffered jump input is not used for multiple jumps
+                }
+
             }
         }
 
@@ -129,7 +148,7 @@ public class PlayerJump : MonoBehaviour
 
     void DetectJumpInput(InputAction.CallbackContext context)
     {   
-        
+
         timeSinceJumpInput = 0;
 
     }
@@ -139,12 +158,7 @@ public class PlayerJump : MonoBehaviour
         // We cancel a jump before starting a new one to reset all jump state variables.
         CancelJump();
 
-        if(jumpType != JumpType.Regular && lastExecutedJumpType == jumpType && Mathf.Abs(rigidbody.position.x - wallJumpXCoordinate) < wallJumpRaycastLength + 0.3f)
-        {
-            // Prevent repeated jumps on the same wall by checking if the player is trying to wall jump in the same direction within a short distance from the last wall jump
-            return;
 
-        }
 
         lastExecutedJumpType = jumpType;
         // Set jump state variables and reset vertical velocity to 0 to ensure consistent jump height regardless of current vertical velocity
@@ -203,6 +217,7 @@ public class PlayerJump : MonoBehaviour
         }
     }
 
+
     public void CancelJump(){
         jumpStarted = false;
         jumpCut = false;
@@ -218,6 +233,7 @@ public class PlayerJump : MonoBehaviour
     {
         return jumpAction.IsPressed();
     }
+    
 }
 
 enum JumpType
