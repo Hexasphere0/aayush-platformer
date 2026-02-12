@@ -26,12 +26,14 @@ public class PlayerJump : MonoBehaviour
     public float clipJumpVelocityAdditionTime;
     public float verticalPostClipVelocityMultiplier;
     public float horizontalPostClipVelocityMultiplier;
+    public float minimumClippingDistance;
 
     // private variables
     new Rigidbody2D rigidbody;
     PlayerController player;
     InputAction jumpAction;
     Vector2 gravity;
+    Collider2D playerCollider;
 
     // Jump state variables
     bool jumpStarted = false;
@@ -50,7 +52,7 @@ public class PlayerJump : MonoBehaviour
 
     // Clip Jump Variables
     float timeSinceClip = 0;
-
+    
 
 
     public static PlayerJump instance;
@@ -71,6 +73,7 @@ public class PlayerJump : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody2D>();
         player = GetComponent<PlayerController>();
+        playerCollider = GetComponent<Collider2D>();
 
         jumpAction = InputSystem.actions.FindAction("Jump");
         jumpAction.performed += DetectJumpInput;
@@ -214,7 +217,21 @@ public class PlayerJump : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
-        timeSinceClip = 0;
+        string name = other.gameObject.name.Split('(')[0];
+        if(!(name.Equals("Block ") || name.Equals("Moving Platform "))){
+            return;
+        }
+
+        ColliderDistance2D distance = Physics2D.Distance(playerCollider, other);
+
+        if(distance.distance < -minimumClippingDistance && distance.isOverlapped)
+        {
+            // Sets timeSinceClip to 0 whenever the player is clipped in a wall/floor which will allow the player to jump away from the wall/floor with increased strength
+            timeSinceClip = 0;
+            Debug.Log("Clipped");
+
+        }
+
     }
 
     JumpType canJump()

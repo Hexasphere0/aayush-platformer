@@ -1541,7 +1541,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.151723, y: -1.7301003, z: -10}
+  m_LocalPosition: {x: 4.1442375, y: -1.7301003, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5952,7 +5952,7 @@ Transform:
   m_GameObject: {fileID: 1920047863}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.151723, y: -1.7301003, z: -10}
+  m_LocalPosition: {x: 4.1442375, y: -1.7301003, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6728,6 +6728,22 @@ PrefabInstance:
     - target: {fileID: 2245920893365100995, guid: fe318fdc8da3feb44a9de5862f00e38d, type: 3}
       propertyPath: m_SortingOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3810747589444066509, guid: fe318fdc8da3feb44a9de5862f00e38d, type: 3}
+      propertyPath: minimumClippingDistance
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 3810747589444066509, guid: fe318fdc8da3feb44a9de5862f00e38d, type: 3}
+      propertyPath: clipJumpVelocityAdditionTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3810747589444066509, guid: fe318fdc8da3feb44a9de5862f00e38d, type: 3}
+      propertyPath: verticalPostClipVelocityMultiplier
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3810747589444066509, guid: fe318fdc8da3feb44a9de5862f00e38d, type: 3}
+      propertyPath: horizontalPostClipVelocityMultiplier
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4141382330534192671, guid: fe318fdc8da3feb44a9de5862f00e38d, type: 3}
       propertyPath: m_Name
