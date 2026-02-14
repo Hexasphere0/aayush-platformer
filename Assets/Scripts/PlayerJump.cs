@@ -228,8 +228,7 @@ public class PlayerJump : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
-        string name = other.gameObject.name.Split('(')[0];
-        if(!(name.Equals("Block ") || name.Equals("Moving Platform "))){
+        if(other.tag != "Block"){
             return;
         }
 
