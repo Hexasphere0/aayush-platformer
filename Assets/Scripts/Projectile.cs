@@ -25,8 +25,10 @@ public class Projectile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("TRIGGERENTER!");
         if(collision.tag == targetTag)
         {
+            Debug.Log("RESPAWN");
             // TODO (this only works against player rn)
             collision.GetComponent<PlayerController>().Respawn();
         }

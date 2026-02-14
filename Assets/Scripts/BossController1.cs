@@ -1,46 +1,56 @@
+using System;
 using UnityEngine;
 
 public class BossController1 : MonoBehaviour
 {
-    float time = 0;
+    public float timeBetweenTicks;
+    float timeSinceTick = 0f;
+    int ticks = 0;
 
     [Header("Projectile Attack Settings")]
-    public float timeBetweenProjectileAttacks;
+    public float ticksBetweenProjectileAttacks;
     public int projectileCount;
     public int projectileLifetime;
     public float projectileDistanceFromCenter;
-    public Vector2 projectileVelocity;
+    public float projectileVelocity;
+    public float projectileScale;
     
     public GameObject projectilePrefab;
     
-    void Start()
-    {
-        
-    }
-
     void FixedUpdate()
     {
-        time += Time.fixedDeltaTime;
+        timeSinceTick += Time.fixedDeltaTime;
 
-        if(time % timeBetweenProjectileAttacks == 0)
+        if(timeSinceTick >= timeBetweenTicks)
         {
-            Debug.Log("PROJECTILE ATTACK!");
-            float angleBetweenProjectiles = (float) 360 / projectileCount;
-            for(int i = 0; i < projectileCount; i++)
+            ticks++;
+            timeSinceTick = 0;
+
+            // Projectile Attack
+            if(ticks % ticksBetweenProjectileAttacks == 0)
             {
-                float projectileAngle = angleBetweenProjectiles * i;
+                float angleBetweenProjectiles = (float) 360 / projectileCount;
+                for(int i = 0; i < projectileCount; i++)
+                {
+                    float projectileAngle = angleBetweenProjectiles * i;
+                    float projectileAngleRad = projectileAngle * Mathf.Deg2Rad;
 
-                Vector3 direction = new Vector3(Mathf.Cos(projectileAngle), Mathf.Sin(projectileAngle)).normalized;
+                    Vector3 direction = new Vector3(Mathf.Cos(projectileAngleRad), Mathf.Sin(projectileAngleRad)).normalized;
 
-                GameObject projectileInstance = Instantiate(projectilePrefab);
+                    GameObject projectileInstance = Instantiate(projectilePrefab);
 
-                projectileInstance.transform.position = transform.position + direction * projectileDistanceFromCenter;
-                projectileInstance.GetComponent<Projectile>().Initialize("Player", projectileLifetime);
-                projectileInstance.GetComponent<Rigidbody2D>().AddForce(projectileVelocity, ForceMode2D.Impulse);
+                    projectileInstance.transform.position = transform.position + direction * projectileDistanceFromCenter;
+                    projectileInstance.GetComponent<Projectile>().Initialize("Player", projectileLifetime);
+                    projectileInstance.transform.localScale *= projectileScale;
+                    projectileInstance.GetComponent<Rigidbody2D>().AddForce(direction * projectileVelocity, ForceMode2D.Impulse);
 
-                // projectileInstance.GetComponent<Projectile>().Initialize(direction, projectileSpeed, projectileDamage, projectileLifetime, "Player", false);
+                    // Make half of the projectiles randomly blue
+                    if(UnityEngine.Random.Range(0, 2) == 0)
+                    {
+                        projectileInstance.GetComponent<LevelBlockEditor>().ChangeLayer();
+                    }
+                }
             }
-
         }
     }
 }
