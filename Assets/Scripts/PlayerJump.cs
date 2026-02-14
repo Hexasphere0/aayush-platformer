@@ -178,7 +178,6 @@ public class PlayerJump : MonoBehaviour
         if(canClipJump){
             timeSinceClip = clipJumpVelocityAdditionTime + 1; // reset time since clip so that velocity addition from clipping is not applied for multiple jumps
             timeSinceLayerChange = clipJumpVelocityAdditionTime + 1; // reset time since layer change for the same reason
-            Debug.Log("Can clip jump!");
         }
 
         // Normal Jump

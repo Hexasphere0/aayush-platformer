@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
     private bool movementFrozen { get; set; } = false;
     private bool leftMovementFrozen { get; set; } = false;
     private bool rightMovementFrozen { get; set; } = false;
+    private bool frictionFrozen { get; set; } = false;
+    private bool gravityFrozen { get; set; } = false;
 
     new Rigidbody2D rigidbody;
     SpriteRenderer spriteRenderer;
@@ -89,6 +91,10 @@ public class PlayerController : MonoBehaviour
 
         // Apply Friction
         Vector2 friction = getFriction(frictionAcceleration, dt, rigidbody.linearVelocity);
+        if(frictionFrozen){
+            friction = Vector2.zero;
+        }
+
         rigidbody.AddForce(friction, ForceMode2D.Impulse);
 
         // Movement
@@ -114,7 +120,10 @@ public class PlayerController : MonoBehaviour
         }
 
         // Gravity
-        rigidbody.AddForce(gravity, ForceMode2D.Force);
+        if(!(gravityFrozen)){
+            rigidbody.AddForce(gravity, ForceMode2D.Force);
+
+        }
         
         // Clamp Fall Speed
         rigidbody.linearVelocityY = Mathf.Max(rigidbody.linearVelocityY, -maxFallSpeed);
@@ -126,21 +135,16 @@ public class PlayerController : MonoBehaviour
     public IEnumerator FreezeMovement(float seconds)
     {
         movementFrozen = true;
-        while(true){
-            yield return new WaitForSeconds(seconds);
 
-            movementFrozen = false;
-        }
+        yield return new WaitForSeconds(seconds);
+        movementFrozen = false;
     }
 
     public IEnumerator FreezeLeftMovement(float seconds)
     {
         leftMovementFrozen = true;
 
-        
-
         yield return new WaitForSeconds(seconds);
-
         leftMovementFrozen = false;
 
     }
@@ -149,11 +153,25 @@ public class PlayerController : MonoBehaviour
         
         rightMovementFrozen = true;
 
-        
+        yield return new WaitForSeconds(seconds);
+        rightMovementFrozen = false;
+    }
+
+    public IEnumerator FreezeFriction(float seconds)
+    {
+
+        frictionFrozen = true;
 
         yield return new WaitForSeconds(seconds);
+        frictionFrozen = false;
+    }
 
-        rightMovementFrozen = false;
+    public IEnumerator FreezeGravity(float seconds)
+    {
+        gravityFrozen = true;
+
+        yield return new WaitForSeconds(seconds);
+        gravityFrozen = false;
     }
 
     public bool IsGrounded()
