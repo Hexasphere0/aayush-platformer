@@ -227,8 +227,6 @@ public class PlayerJump : MonoBehaviour
         {
             // Sets timeSinceClip to 0 whenever the player is clipped in a wall/floor which will allow the player to jump away from the wall/floor with increased strength
             timeSinceClip = 0;
-            Debug.Log("Clipped");
-
         }
 
     }
