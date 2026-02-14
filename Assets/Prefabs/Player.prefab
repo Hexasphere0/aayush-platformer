@@ -303,5 +303,10 @@ MonoBehaviour:
   wallJumpStrength: {x: 20, y: 14}
   wallJumpRaycastLength: 0.5
   wallJumpRaycastOffset: {x: 0.501, y: 0}
+  wallJumpMovementFreezeTime: 0.3
   coyoteTime: 0.2
   jumpInputBufferTime: 0.15
+  clipJumpVelocityAdditionTime: 0.1
+  verticalPostClipVelocityMultiplier: 1.2
+  horizontalPostClipVelocityMultiplier: 1.5
+  minimumClippingDistance: 0.05
