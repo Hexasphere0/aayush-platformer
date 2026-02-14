@@ -52,7 +52,7 @@ public class PlayerJump : MonoBehaviour
 
     // Clip Jump Variables
     float timeSinceClip = 0;
-    
+    float timeSinceLayerChange = 0;
 
 
     public static PlayerJump instance;
@@ -90,6 +90,7 @@ public class PlayerJump : MonoBehaviour
         timeSinceCanJump += dt;
         timeSinceJumpInput += dt;
         timeSinceClip += dt;
+        timeSinceLayerChange += dt;
 
         if (!jumpStarted)
         {
@@ -171,12 +172,21 @@ public class PlayerJump : MonoBehaviour
             rigidbody.AddForce(new Vector2(0, -rigidbody.linearVelocity.y), ForceMode2D.Impulse);
         }
         
+        bool canClipJump = timeSinceClip <= clipJumpVelocityAdditionTime && timeSinceLayerChange <= clipJumpVelocityAdditionTime;
+        //Debug.Log("Time since clip: " + timeSinceClip);
+        //Debug.Log("Time since layer change: " + timeSinceLayerChange);
+        if(canClipJump){
+            timeSinceClip = clipJumpVelocityAdditionTime + 1; // reset time since clip so that velocity addition from clipping is not applied for multiple jumps
+            timeSinceLayerChange = clipJumpVelocityAdditionTime + 1; // reset time since layer change for the same reason
+            Debug.Log("Can clip jump!");
+        }
+
         // Normal Jump
         if (jumpType == JumpType.Regular)
         {
             currentJumpStrength = jumpStrength;
 
-            if(timeSinceClip <= clipJumpVelocityAdditionTime)
+            if(canClipJump)
             {
                 currentJumpStrength *= verticalPostClipVelocityMultiplier;
             }
@@ -189,7 +199,8 @@ public class PlayerJump : MonoBehaviour
         currentJumpStrength = wallJumpStrength.y;
 
         float horizontalJumpStrength = wallJumpStrength.x;
-        if(timeSinceClip <= clipJumpVelocityAdditionTime)
+
+        if(canClipJump)
         {
             horizontalJumpStrength *= horizontalPostClipVelocityMultiplier;
         }
@@ -229,6 +240,11 @@ public class PlayerJump : MonoBehaviour
             timeSinceClip = 0;
         }
 
+    }
+
+    public void OnLayerChange()
+    {
+        timeSinceLayerChange = 0;
     }
 
     JumpType canJump()

@@ -41,6 +41,11 @@ public class PlayerController : MonoBehaviour
     InputAction moveAction;
     InputAction layerChangeAction;
     
+
+    // Events
+    public delegate void LayerChangeEvent();
+    public static event LayerChangeEvent OnLayerChange;
+
     // Instance
     public static PlayerController instance;
 
@@ -71,6 +76,8 @@ public class PlayerController : MonoBehaviour
         layerChangeAction = InputSystem.actions.FindAction("LayerChange");
 
         layerChangeAction.performed += LayerChange;
+
+        OnLayerChange += jump.OnLayerChange;
 
         respawnPoint = transform.position;
         initialRespawnPoint = transform.position;
@@ -176,6 +183,8 @@ public class PlayerController : MonoBehaviour
             spriteRenderer.color = redColor;
             gameObject.layer = 6;
         }
+
+        OnLayerChange();
     }
 
     Vector2 getFriction(float frictionAcceleration, float dt, Vector2 currentVelocity)
