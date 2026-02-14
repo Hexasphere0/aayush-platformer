@@ -306,7 +306,7 @@ MonoBehaviour:
   wallJumpMovementFreezeTime: 0.3
   coyoteTime: 0.2
   jumpInputBufferTime: 0.15
-  clipJumpVelocityAdditionTime: 0.1
+  clipJumpVelocityAdditionTime: 0.2
   verticalPostClipVelocityMultiplier: 1.2
   horizontalPostClipVelocityMultiplier: 1.5
   minimumClippingDistance: 0.05
