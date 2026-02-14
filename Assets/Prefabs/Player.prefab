@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 3810747589444066509}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -306,7 +306,7 @@ MonoBehaviour:
   wallJumpMovementFreezeTime: 0.3
   coyoteTime: 0.2
   jumpInputBufferTime: 0.15
-  clipJumpVelocityAdditionTime: 0.2
+  clipJumpVelocityAdditionTime: 0.1
   verticalPostClipVelocityMultiplier: 1.2
   horizontalPostClipVelocityMultiplier: 1.5
   minimumClippingDistance: 0.05
