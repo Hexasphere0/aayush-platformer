@@ -42,7 +42,6 @@ public class PlayerController : MonoBehaviour
 
     InputAction moveAction;
     InputAction layerChangeAction;
-    
 
     // Events
     public delegate void LayerChangeEvent();
@@ -75,6 +74,7 @@ public class PlayerController : MonoBehaviour
         jump = GetComponent<PlayerJump>();
         
         moveAction = InputSystem.actions.FindAction("Move");
+
         layerChangeAction = InputSystem.actions.FindAction("LayerChange");
 
         layerChangeAction.performed += LayerChange;
