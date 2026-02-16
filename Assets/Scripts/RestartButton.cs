@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RestartButton : MonoBehaviour
 {
@@ -13,7 +14,6 @@ public class RestartButton : MonoBehaviour
 
     public void Restart()
     {
-        gameTimer.Restart();
-        playerController.HardRespawn();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
