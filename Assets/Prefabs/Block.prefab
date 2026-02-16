@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8117634243669487820}
   - component: {fileID: 373265871045030277}
   - component: {fileID: -3581372628855275695}
+  - component: {fileID: 1711033331120905086}
   m_Layer: 6
   m_Name: Block
   m_TagString: Block
@@ -27,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4036393973559736596}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.49298, y: 2.3055499, z: 0}
   m_LocalScale: {x: 5.3805, y: 2.0883, z: 1}
   m_ConstrainProportionsScale: 0
@@ -153,3 +154,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelBlockEditor
   redColor: {r: 0.9716981, g: 0.23104642, b: 0.068752214, a: 1}
   blueColor: {r: 0.28886467, g: 0.2688679, b: 1, a: 1}
+  blackColor: {r: 0, g: 0, b: 0, a: 1}
+--- !u!114 &1711033331120905086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4036393973559736596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d22575d15258574187e880db273728c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelBlock
+  redColor: {r: 0.9716981, g: 0.23104642, b: 0.068752214, a: 1}
+  blueColor: {r: 0.28886467, g: 0.2688679, b: 1, a: 1}
+  blackColor: {r: 0, g: 0, b: 0, a: 0}

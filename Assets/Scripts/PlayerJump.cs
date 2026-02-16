@@ -94,7 +94,6 @@ public class PlayerJump : MonoBehaviour
 
         if (!jumpStarted)
         {
-
             JumpType jumpType = canJump();
 
             if(jumpType != JumpType.None)
@@ -111,7 +110,6 @@ public class PlayerJump : MonoBehaviour
 
             if (timeSinceCanJump <= coyoteTime && timeSinceJumpInput <= jumpInputBufferTime && priorJumpType != JumpType.None)
             {
-                
                 if(!(priorJumpType != JumpType.Regular && lastExecutedJumpType == priorJumpType && Mathf.Abs(rigidbody.position.x - wallJumpXCoordinate) < wallJumpRaycastLength + 0.3f))
                 {
                     // Prevent repeated jumps on the same wall by checking if the player is trying to wall jump in the same direction within a short distance from the last wall jump
@@ -134,7 +132,6 @@ public class PlayerJump : MonoBehaviour
             }
             else
             {
-                
                 CancelJump();
                 jumpCut = true;
                 rigidbody.AddForce(Vector2.down * rigidbody.linearVelocity.y * endJumpVelocityMultiplier, ForceMode2D.Impulse);
@@ -161,8 +158,6 @@ public class PlayerJump : MonoBehaviour
     {
         // We cancel a jump before starting a new one to reset all jump state variables.
         CancelJump();
-
-
 
         lastExecutedJumpType = jumpType;
         // Set jump state variables and reset vertical velocity to 0 to ensure consistent jump height regardless of current vertical velocity
@@ -209,11 +204,8 @@ public class PlayerJump : MonoBehaviour
 
         wallJumpXCoordinate = rigidbody.position.x;
 
-
         if(jumpType == JumpType.WallLeft)
         {
-
-            
             rigidbody.AddForce(new Vector2(horizontalJumpStrength, 0), ForceMode2D.Impulse);
             return;
         }
@@ -251,11 +243,11 @@ public class PlayerJump : MonoBehaviour
         {
             return JumpType.Regular;
         }
-        else if(Physics2D.Raycast(transform.position - (Vector3) wallJumpRaycastOffset, Vector2.left, wallJumpRaycastLength, 1 << gameObject.layer))
+        else if(Physics2D.Raycast(transform.position - (Vector3) wallJumpRaycastOffset, Vector2.left, wallJumpRaycastLength, player.GetInteractableLayers()))
         {
             return JumpType.WallLeft;
         }
-        else if(Physics2D.Raycast(transform.position + (Vector3) wallJumpRaycastOffset, Vector2.right, wallJumpRaycastLength, 1 << gameObject.layer))
+        else if(Physics2D.Raycast(transform.position + (Vector3) wallJumpRaycastOffset, Vector2.right, wallJumpRaycastLength, player.GetInteractableLayers()))
         {
             return JumpType.WallRight;
         }

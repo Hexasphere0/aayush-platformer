@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -183,7 +185,6 @@ public class PlayerController : MonoBehaviour
         Debug.DrawRay(raycastOrigin + Vector3.right * groundedGraceDistance, Vector2.down, Color.red);
         Debug.DrawRay(raycastOrigin + Vector3.left * groundedGraceDistance, Vector2.down, Color.red);
 
-
         return GroundedRaycastHit(raycastOrigin) ||
             GroundedRaycastHit(raycastOrigin + Vector3.right * groundedGraceDistance) || 
             GroundedRaycastHit(raycastOrigin + Vector3.left * groundedGraceDistance);
@@ -220,9 +221,17 @@ public class PlayerController : MonoBehaviour
 
     bool GroundedRaycastHit(Vector3 origin)
     {
-        RaycastHit2D hit = Physics2D.Raycast(origin, Vector3.down, groundedRaycastLength, 1 << gameObject.layer);
+        RaycastHit2D hit = Physics2D.Raycast(origin, Vector3.down, groundedRaycastLength, GetInteractableLayers());
 
         return hit.collider != null;
+    }
+
+    public int GetInteractableLayers()
+    {
+        string currentLayer = LayerMask.LayerToName(gameObject.layer);
+        string[] layers = new string[] {currentLayer, "Black"};
+
+        return LayerMask.GetMask(layers);
     }
 
     public void Respawn()

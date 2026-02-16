@@ -1,14 +1,14 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(LevelBlockEditor))]
+[CustomEditor(typeof(LayerChanger))]
 public class LevelBlockEditorUI : Editor
 {
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
 
-        LevelBlockEditor scriptReference = (LevelBlockEditor) target;
+        LayerChanger scriptReference = (LayerChanger) target;
 
         if(GUILayout.Button("Change Layer"))
         {

@@ -47,7 +47,7 @@ public class BossController1 : MonoBehaviour
                     // Make half of the projectiles randomly blue
                     if(UnityEngine.Random.Range(0, 2) == 0)
                     {
-                        projectileInstance.GetComponent<LevelBlockEditor>().ChangeLayer();
+                        projectileInstance.GetComponent<LayerChanger>().ChangeLayer();
                     }
                 }
             }
