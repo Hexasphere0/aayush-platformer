@@ -229,7 +229,7 @@ public class PlayerController : MonoBehaviour
     public int GetInteractableLayers()
     {
         string currentLayer = LayerMask.LayerToName(gameObject.layer);
-        string[] layers = new string[] {currentLayer, "Black"};
+        string[] layers = new string[] {currentLayer, "White"};
 
         return LayerMask.GetMask(layers);
     }

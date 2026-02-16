@@ -5,7 +5,7 @@ public class LayerChanger : MonoBehaviour
 {
     public Color redColor;
     public Color blueColor;
-    public Color blackColor;
+    public Color whiteColor;
 
     public void ChangeLayer()
     {
@@ -19,7 +19,7 @@ public class LayerChanger : MonoBehaviour
         else if(gameObject.layer == 7)
         {
             gameObject.layer = 8;
-            spriteRenderer.color = blackColor; 
+            spriteRenderer.color = whiteColor; 
         }
         else
         {
