@@ -281,7 +281,7 @@ MonoBehaviour:
   blueColor: {r: 0.28886467, g: 0.2688679, b: 1, a: 1}
   maxFallSpeed: 56.5
   frictionAcceleration: 125
-  groundedGraceDistance: 0
+  groundedGraceDistance: 0.49
   respawnLayer: 0
 --- !u!114 &3810747589444066509
 MonoBehaviour:
