@@ -1,10 +1,11 @@
 using UnityEngine;
 using TMPro;
 
-public class LevelBlockEditor : MonoBehaviour
+public class LayerChanger : MonoBehaviour
 {
     public Color redColor;
     public Color blueColor;
+    public Color whiteColor;
 
     public void ChangeLayer()
     {
@@ -15,10 +16,15 @@ public class LevelBlockEditor : MonoBehaviour
             gameObject.layer = 7;
             spriteRenderer.color = blueColor; 
         }
+        else if(gameObject.layer == 7)
+        {
+            gameObject.layer = 8;
+            spriteRenderer.color = whiteColor; 
+        }
         else
         {
             gameObject.layer = 6;
-            spriteRenderer.color = redColor; 
+            spriteRenderer.color = redColor;
         }
     }
 }

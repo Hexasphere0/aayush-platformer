@@ -297,6 +297,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelBlock
   redColor: {r: 0.9716981, g: 0.23104642, b: 0.068752214, a: 1}
   blueColor: {r: 0.28886467, g: 0.2688679, b: 1, a: 1}
+  blackColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1001 &314446936
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -397,6 +398,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelBlock
   redColor: {r: 0.9716981, g: 0.23104642, b: 0.068752214, a: 1}
   blueColor: {r: 0.28886467, g: 0.2688679, b: 1, a: 1}
+  blackColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &345672766
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,6 +669,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelBlock
   redColor: {r: 0.9716981, g: 0.23104642, b: 0.068752214, a: 1}
   blueColor: {r: 0.28886467, g: 0.2688679, b: 1, a: 1}
+  blackColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1021,6 +1024,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelBlock
   redColor: {r: 0.9716981, g: 0.23104642, b: 0.068752214, a: 1}
   blueColor: {r: 0.28886467, g: 0.2688679, b: 1, a: 1}
+  blackColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1001 &725382245
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1032,22 +1036,6 @@ PrefabInstance:
     - target: {fileID: 4036393973559736596, guid: 23d3276b90ea0014981cafbc3963f5b6, type: 3}
       propertyPath: m_Name
       value: Block (6)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4036393973559736596, guid: 23d3276b90ea0014981cafbc3963f5b6, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8117634243669487820, guid: 23d3276b90ea0014981cafbc3963f5b6, type: 3}
-      propertyPath: m_Color.b
-      value: 0.068752214
-      objectReference: {fileID: 0}
-    - target: {fileID: 8117634243669487820, guid: 23d3276b90ea0014981cafbc3963f5b6, type: 3}
-      propertyPath: m_Color.g
-      value: 0.23104642
-      objectReference: {fileID: 0}
-    - target: {fileID: 8117634243669487820, guid: 23d3276b90ea0014981cafbc3963f5b6, type: 3}
-      propertyPath: m_Color.r
-      value: 0.9716981
       objectReference: {fileID: 0}
     - target: {fileID: 8634136174527371724, guid: 23d3276b90ea0014981cafbc3963f5b6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1092,35 +1080,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4036393973559736596, guid: 23d3276b90ea0014981cafbc3963f5b6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 725382248}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23d3276b90ea0014981cafbc3963f5b6, type: 3}
 --- !u!4 &725382246 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8634136174527371724, guid: 23d3276b90ea0014981cafbc3963f5b6, type: 3}
   m_PrefabInstance: {fileID: 725382245}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &725382247 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4036393973559736596, guid: 23d3276b90ea0014981cafbc3963f5b6, type: 3}
-  m_PrefabInstance: {fileID: 725382245}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &725382248
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 725382247}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d22575d15258574187e880db273728c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LevelBlock
-  redColor: {r: 0.9716981, g: 0.23104642, b: 0.068752214, a: 1}
-  blueColor: {r: 0.28886467, g: 0.2688679, b: 1, a: 1}
 --- !u!4 &767131649 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5357513115655768760, guid: f26afa75d08463d4abf4510a20440bd6, type: 3}
@@ -1868,6 +1834,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelBlock
   redColor: {r: 0.9716981, g: 0.23104642, b: 0.068752214, a: 1}
   blueColor: {r: 0.28886467, g: 0.2688679, b: 1, a: 1}
+  blackColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1231360280
 GameObject:
   m_ObjectHideFlags: 0
@@ -2574,6 +2541,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelBlock
   redColor: {r: 0.9716981, g: 0.23104642, b: 0.068752214, a: 1}
   blueColor: {r: 0.28886467, g: 0.2688679, b: 1, a: 1}
+  blackColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1558732001
 GameObject:
   m_ObjectHideFlags: 0
@@ -2785,6 +2753,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelBlock
   redColor: {r: 0.9716981, g: 0.23104642, b: 0.068752214, a: 1}
   blueColor: {r: 0.28886467, g: 0.2688679, b: 1, a: 1}
+  blackColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1001 &1663748172
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2885,6 +2854,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelBlock
   redColor: {r: 0.9716981, g: 0.23104642, b: 0.068752214, a: 1}
   blueColor: {r: 0.28886467, g: 0.2688679, b: 1, a: 1}
+  blackColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1001 &1902206703
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3691,6 +3661,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelBlock
   redColor: {r: 0.9716981, g: 0.23104642, b: 0.068752214, a: 1}
   blueColor: {r: 0.28886467, g: 0.2688679, b: 1, a: 1}
+  blackColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
