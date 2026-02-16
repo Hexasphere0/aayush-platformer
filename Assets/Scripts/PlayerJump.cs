@@ -224,7 +224,6 @@ public class PlayerJump : MonoBehaviour
         }
     }
 
-
     void OnTriggerStay2D(Collider2D other)
     {
         if(other.tag != "Block"){
@@ -283,6 +282,9 @@ public class PlayerJump : MonoBehaviour
         return jumpAction.IsPressed();
     }
     
+    public void resetWallJump(){
+        lastExecutedJumpType = JumpType.None;
+    }
 }
 
 enum JumpType

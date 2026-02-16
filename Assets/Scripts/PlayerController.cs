@@ -245,4 +245,14 @@ public class PlayerController : MonoBehaviour
             LayerChange(new UnityEngine.InputSystem.InputAction.CallbackContext());
         }
     }
+
+    public void CancelJump()
+    {
+        jump.CancelJump();
+    }
+
+    public void resetWallJump()
+    {
+        jump.resetWallJump();
+    }
 }

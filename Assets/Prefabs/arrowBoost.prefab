@@ -152,4 +152,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArrowBoost
   boostVelocity: 50
-  boostDuration: 0.15
+  boostDuration: 0.1

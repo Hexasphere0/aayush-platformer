@@ -7,36 +7,36 @@ public class ArrowBoost : MonoBehaviour
     public float boostVelocity;
     public float boostDuration;
 
+    //Static variables
+    static float timeTillBoostEnd = 0f;
+    static Vector2 endBoostVelocity = Vector2.zero;
+    static float numInstances = 0f;
     // Private Variables
     new Rigidbody2D rigidbody;
     PlayerController player;
-    
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         player = PlayerController.instance;
         rigidbody = player.GetComponent<Rigidbody2D>();
-        
+        numInstances++;
     }
 
-    // Update is called once per frame
+    
     void OnTriggerEnter2D(Collider2D other)
     {
+        player.CancelJump();
+        player.resetWallJump();
+        
         if(!(other.tag.Equals("Player"))){
             return;
         }
 
-        
-
         Vector2 boostDirection = Mathf.Cos(transform.eulerAngles.z * Mathf.Deg2Rad) * Vector2.right + Mathf.Sin(transform.eulerAngles.z * Mathf.Deg2Rad) * Vector2.up;
-
-        Vector2 parallelComponent = Vector2.Dot(boostDirection, rigidbody.linearVelocity) * boostDirection;
-        rigidbody.AddForce(-(rigidbody.linearVelocity - parallelComponent), ForceMode2D.Impulse);
-
-        if(Vector2.Dot(boostDirection, parallelComponent) < 0){
-            rigidbody.AddForce(-parallelComponent, ForceMode2D.Impulse);
-        }
+        
+        
+        rigidbody.AddForce(-rigidbody.linearVelocity, ForceMode2D.Impulse);
 
         Vector2 impulse = boostDirection * boostVelocity;
 
@@ -46,13 +46,25 @@ public class ArrowBoost : MonoBehaviour
         StartCoroutine(player.FreezeFriction(boostDuration));
         StartCoroutine(player.FreezeGravity(boostDuration));
 
-        StartCoroutine(endBoost(impulse));
+        timeTillBoostEnd = boostDuration;
+        endBoostVelocity = new Vector2(-(impulse.x * (1 - Mathf.Pow(3f/4f, boostVelocity/30))), -(impulse.y * (1 - Mathf.Pow(2f/5f, boostVelocity/30))));
     }
 
-    IEnumerator endBoost(Vector2 impulse)
+    // Update is called once per frame
+    void FixedUpdate()
     {
-        yield return new WaitForSeconds(boostDuration);
+        timeTillBoostEnd -= Time.fixedDeltaTime/numInstances;
 
-        rigidbody.AddForce(new Vector2(0, -impulse.y/2f), ForceMode2D.Impulse);
+        if(timeTillBoostEnd < 0)
+        {
+            timeTillBoostEnd = 0;
+
+        }
+
+        if(timeTillBoostEnd == 0 && endBoostVelocity != Vector2.zero)
+        {
+            rigidbody.AddForce(endBoostVelocity, ForceMode2D.Impulse);
+            endBoostVelocity = Vector2.zero;
+        }
     }
 }
