@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "aayush-platformer.slnx"
+    "dotnet.defaultSolution": "aayushplatformer.slnx"
 }
