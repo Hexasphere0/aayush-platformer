@@ -23875,6 +23875,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelBlock
   redColor: {r: 0.9716981, g: 0.23104642, b: 0.068752214, a: 1}
   blueColor: {r: 0.28886467, g: 0.2688679, b: 1, a: 1}
+  whiteColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!4 &1402472673 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8815248538744692552, guid: 10a73035f850977439b8e7432fbd7baa, type: 3}
@@ -27833,11 +27834,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5357513115655768760, guid: f26afa75d08463d4abf4510a20440bd6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 60.96
+      value: 58.59
       objectReference: {fileID: 0}
     - target: {fileID: 5357513115655768760, guid: f26afa75d08463d4abf4510a20440bd6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 36.42
+      value: 36.34
       objectReference: {fileID: 0}
     - target: {fileID: 5357513115655768760, guid: f26afa75d08463d4abf4510a20440bd6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -30280,6 +30281,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelBlock
   redColor: {r: 0.9716981, g: 0.23104642, b: 0.068752214, a: 1}
   blueColor: {r: 0.28886467, g: 0.2688679, b: 1, a: 1}
+  whiteColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!4 &1790997572 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8815248538744692552, guid: 10a73035f850977439b8e7432fbd7baa, type: 3}
@@ -35898,6 +35900,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelBlock
   redColor: {r: 0.9716981, g: 0.23104642, b: 0.068752214, a: 1}
   blueColor: {r: 0.28886467, g: 0.2688679, b: 1, a: 1}
+  whiteColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
