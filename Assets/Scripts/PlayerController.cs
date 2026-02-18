@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour
     InputAction moveAction;
     InputAction layerChangeAction;
 
+    bool speedrunMode;
+
     // Events
     public delegate void LayerChangeEvent();
     public static event LayerChangeEvent OnLayerChange;
@@ -236,6 +238,13 @@ public class PlayerController : MonoBehaviour
 
     public void Respawn()
     {
+        if (speedrunMode)
+        {
+            GameTimer.instance.Restart();
+            HardRespawn();
+            return;
+        }
+
         transform.position = respawnPoint;
 
         if(gameObject.layer != respawnLayer)
@@ -253,6 +262,11 @@ public class PlayerController : MonoBehaviour
         {
             LayerChange(new UnityEngine.InputSystem.InputAction.CallbackContext());
         }
+    }
+
+    public void SetSpeedrunMode(bool speedrunMode)
+    {
+        this.speedrunMode = speedrunMode;
     }
 
     public void CancelJump()
