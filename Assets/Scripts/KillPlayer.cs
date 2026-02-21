@@ -6,7 +6,7 @@ public class KillPlayer : MonoBehaviour
     {
         if(collision.gameObject.name == "Player")
         {
-            PlayerController.instance.Respawn();
+            PlayerController.instance.KillPlayer();
         }
     }
 }

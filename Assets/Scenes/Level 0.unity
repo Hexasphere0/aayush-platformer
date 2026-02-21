@@ -802,7 +802,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -22.691883, y: -1.7300998, z: -10}
+  m_LocalPosition: {x: -22.6923, y: -1.7300998, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2090,6 +2090,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1107365042}
     m_Modifications:
+    - target: {fileID: 373265871045030277, guid: 23d3276b90ea0014981cafbc3963f5b6, type: 3}
+      propertyPath: m_SpriteTilingProperty.border.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 373265871045030277, guid: 23d3276b90ea0014981cafbc3963f5b6, type: 3}
+      propertyPath: m_SpriteTilingProperty.border.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 373265871045030277, guid: 23d3276b90ea0014981cafbc3963f5b6, type: 3}
+      propertyPath: m_SpriteTilingProperty.border.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 373265871045030277, guid: 23d3276b90ea0014981cafbc3963f5b6, type: 3}
+      propertyPath: m_SpriteTilingProperty.border.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 373265871045030277, guid: 23d3276b90ea0014981cafbc3963f5b6, type: 3}
+      propertyPath: m_SpriteTilingProperty.drawMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 373265871045030277, guid: 23d3276b90ea0014981cafbc3963f5b6, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 373265871045030277, guid: 23d3276b90ea0014981cafbc3963f5b6, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4036393973559736596, guid: 23d3276b90ea0014981cafbc3963f5b6, type: 3}
       propertyPath: m_Name
       value: Block (2)
@@ -3003,7 +3031,7 @@ Transform:
   m_GameObject: {fileID: 1920047863}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -22.691883, y: -1.7300998, z: -10}
+  m_LocalPosition: {x: -22.6923, y: -1.7300998, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3138,6 +3166,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7535607752285969966, guid: 82ab3643ca8ecc748b6adb208e698542, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2033246912}
+    - target: {fileID: 7553136266998676443, guid: 82ab3643ca8ecc748b6adb208e698542, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2033246912}
     m_RemovedComponents: []

@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour
     InputAction moveAction;
     InputAction layerChangeAction;
 
+    bool speedrunMode;
+
     // Events
     public delegate void LayerChangeEvent();
     public static event LayerChangeEvent OnLayerChange;
@@ -81,7 +83,10 @@ public class PlayerController : MonoBehaviour
 
         layerChangeAction.performed += LayerChange;
 
+        // aayush lowkey sucks at coding
         OnLayerChange += jump.OnLayerChange;
+
+        InputSystem.actions.FindAction("KillPlayer").performed += KillPlayerInput;
 
         respawnPoint = transform.position;
         initialRespawnPoint = transform.position;
@@ -234,6 +239,25 @@ public class PlayerController : MonoBehaviour
         return LayerMask.GetMask(layers);
     }
 
+    public void KillPlayer()
+    {
+        if (speedrunMode)
+        {
+            Debug.Log("Respawn speedrun");
+            GameTimer.instance.Restart();
+            HardRespawn();
+        }
+        else
+        {
+            Respawn();
+        }
+    }
+
+    public void KillPlayerInput(InputAction.CallbackContext context)
+    {
+        KillPlayer();
+    }
+
     public void Respawn()
     {
         transform.position = respawnPoint;
@@ -253,6 +277,11 @@ public class PlayerController : MonoBehaviour
         {
             LayerChange(new UnityEngine.InputSystem.InputAction.CallbackContext());
         }
+    }
+
+    public void SetSpeedrunMode(bool speedrunMode)
+    {
+        this.speedrunMode = speedrunMode;
     }
 
     public void CancelJump()
