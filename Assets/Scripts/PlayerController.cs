@@ -306,9 +306,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void SetSpeedrunMode(bool speedrunMode)
+    public void ToggleSpeedrunMode()
     {
-        this.speedrunMode = speedrunMode;
+        this.speedrunMode = !speedrunMode;
     }
 
     public void CancelJump()
