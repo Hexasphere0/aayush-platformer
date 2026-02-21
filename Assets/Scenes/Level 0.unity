@@ -3544,26 +3544,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2245920893365100995, guid: fe318fdc8da3feb44a9de5862f00e38d, type: 3}
-      propertyPath: m_SortingOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3810747589444066509, guid: fe318fdc8da3feb44a9de5862f00e38d, type: 3}
-      propertyPath: minimumClippingDistance
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 3810747589444066509, guid: fe318fdc8da3feb44a9de5862f00e38d, type: 3}
-      propertyPath: clipJumpVelocityAdditionTime
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3810747589444066509, guid: fe318fdc8da3feb44a9de5862f00e38d, type: 3}
-      propertyPath: verticalPostClipVelocityMultiplier
-      value: 1.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3810747589444066509, guid: fe318fdc8da3feb44a9de5862f00e38d, type: 3}
-      propertyPath: horizontalPostClipVelocityMultiplier
-      value: 1.5
-      objectReference: {fileID: 0}
     - target: {fileID: 4141382330534192671, guid: fe318fdc8da3feb44a9de5862f00e38d, type: 3}
       propertyPath: m_Name
       value: Player
@@ -3607,10 +3587,6 @@ PrefabInstance:
     - target: {fileID: 4530488946299776738, guid: fe318fdc8da3feb44a9de5862f00e38d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6694931353265136605, guid: fe318fdc8da3feb44a9de5862f00e38d, type: 3}
-      propertyPath: movementSpeed
-      value: 240
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
