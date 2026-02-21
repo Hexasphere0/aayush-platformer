@@ -30,7 +30,7 @@ public class Projectile : MonoBehaviour
         {
             Debug.Log("RESPAWN");
             // TODO (this only works against player rn)
-            collision.GetComponent<PlayerController>().Respawn();
+            collision.GetComponent<PlayerController>().KillPlayer();
         }
     }
 

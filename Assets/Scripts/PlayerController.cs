@@ -83,7 +83,10 @@ public class PlayerController : MonoBehaviour
 
         layerChangeAction.performed += LayerChange;
 
+        // aayush lowkey sucks at coding
         OnLayerChange += jump.OnLayerChange;
+
+        InputSystem.actions.FindAction("KillPlayer").performed += KillPlayerInput;
 
         respawnPoint = transform.position;
         initialRespawnPoint = transform.position;
@@ -236,16 +239,27 @@ public class PlayerController : MonoBehaviour
         return LayerMask.GetMask(layers);
     }
 
-    public void Respawn()
+    public void KillPlayer()
     {
         if (speedrunMode)
         {
             Debug.Log("Respawn speedrun");
             GameTimer.instance.Restart();
             HardRespawn();
-            return;
         }
+        else
+        {
+            Respawn();
+        }
+    }
 
+    public void KillPlayerInput(InputAction.CallbackContext context)
+    {
+        KillPlayer();
+    }
+
+    public void Respawn()
+    {
         transform.position = respawnPoint;
 
         if(gameObject.layer != respawnLayer)
