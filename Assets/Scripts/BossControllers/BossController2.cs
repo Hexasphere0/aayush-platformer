@@ -1,11 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class BossController2 : MonoBehaviour
 {
+    public int maxHp;
+    int hp;
+
     public float timeBetweenTicks;
     float timeSinceTick = 0f;
     int ticks = 0;
@@ -20,16 +25,35 @@ public class BossController2 : MonoBehaviour
     public float timeToCollectCheckpoints;
     public Vector2 checkpointSpawnOffset;
     public GameObject bossCheckpointPrefab;
-    public Transform canvas;
 
     [Header("Misc")]
-    
+    public Transform canvas;
+
     public GameObject levelTileParent;
     List<GameObject> levelTiles;
 
+    Image image;
+
+    public static BossController2 instance;
+
+    void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Debug.LogError("Multiple BossController2s!");
+        }
+    }
+
     void Start()
     {
+        image = GetComponent<Image>();
         levelTiles = new List<GameObject>();
+
+        hp = maxHp;
 
         foreach (Transform childTransform in levelTileParent.transform)
         {
@@ -70,5 +94,11 @@ public class BossController2 : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void TakeDamage()
+    {
+        hp--;
+        image.fillAmount = (float) hp / maxHp;
     }
 }

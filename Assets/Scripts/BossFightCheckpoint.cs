@@ -33,6 +33,8 @@ public class BossFightCheckpoint : MonoBehaviour
     {
         if(active && collision.gameObject.name == "Player")
         {
+            Debug.Log("TAKING DAMGE!");
+            BossController2.instance.TakeDamage();
             Destroy(gameObject);
         }
     }
