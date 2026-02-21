@@ -11,8 +11,10 @@ public class TransformingBlock : MonoBehaviour
 
     public void StartTransforming()
     {
-        transformingStartTime = Time.time;
-        isTransforming = true;
+        if(!isTransforming){
+            transformingStartTime = Time.time;
+            isTransforming = true;
+        }
     }
 
     void Update()
