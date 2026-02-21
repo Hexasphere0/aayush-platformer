@@ -50,6 +50,9 @@ public class PlayerController : MonoBehaviour
     // Events
     public delegate void LayerChangeEvent();
     public static event LayerChangeEvent OnLayerChange;
+    
+    public delegate void PlayerDeathEvent();
+    public static event PlayerDeathEvent OnPlayerDeath;
 
     // Instance
     public static PlayerController instance;
@@ -241,6 +244,11 @@ public class PlayerController : MonoBehaviour
 
     public void KillPlayer()
     {
+        if(OnPlayerDeath != null)
+        {
+            OnPlayerDeath();
+        }
+        
         if (speedrunMode)
         {
             Debug.Log("Respawn speedrun");
