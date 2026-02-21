@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Threading;
+using NUnit.Framework.Internal;
 
 public class GameTimer : MonoBehaviour
 {
@@ -50,5 +51,10 @@ public class GameTimer : MonoBehaviour
             time += Time.deltaTime;
             text.text = RoundFloat(time, 2) + "s";
         }
+    }
+
+    public void ToggleGameTimerVisibility()
+    {
+        text.enabled = !text.enabled;
     }
 }

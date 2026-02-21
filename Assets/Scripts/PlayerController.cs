@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Linq;
+using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -27,6 +29,12 @@ public class PlayerController : MonoBehaviour
     [Header("Friction Settings")]
     public float frictionAcceleration;
 
+    [Header("Camera Settings")]
+    public CinemachineCamera cinemachineCamera;
+    public float zoomMultiplier;
+    public float minZoom;
+    public float maxZoom;
+
     [Header("Depricated")]
     public float groundedGraceDistance;
 
@@ -44,12 +52,16 @@ public class PlayerController : MonoBehaviour
 
     InputAction moveAction;
     InputAction layerChangeAction;
+    InputAction zoomAction;
 
     bool speedrunMode;
 
     // Events
     public delegate void LayerChangeEvent();
     public static event LayerChangeEvent OnLayerChange;
+    
+    public delegate void PlayerDeathEvent();
+    public static event PlayerDeathEvent OnPlayerDeath;
 
     // Instance
     public static PlayerController instance;
@@ -78,8 +90,8 @@ public class PlayerController : MonoBehaviour
         jump = GetComponent<PlayerJump>();
         
         moveAction = InputSystem.actions.FindAction("Move");
-
         layerChangeAction = InputSystem.actions.FindAction("LayerChange");
+        zoomAction = InputSystem.actions.FindAction("Zoom");
 
         layerChangeAction.performed += LayerChange;
 
@@ -90,6 +102,16 @@ public class PlayerController : MonoBehaviour
 
         respawnPoint = transform.position;
         initialRespawnPoint = transform.position;
+    }
+
+    void Update()
+    {
+        float zoomValue = zoomAction.ReadValue<float>();
+        float currentZoom = cinemachineCamera.Lens.OrthographicSize;
+        if(zoomValue != 0)
+        {
+            cinemachineCamera.Lens.OrthographicSize = Math.Clamp(currentZoom + zoomValue * zoomMultiplier, minZoom, maxZoom);
+        }
     }
 
     void FixedUpdate()
@@ -241,6 +263,11 @@ public class PlayerController : MonoBehaviour
 
     public void KillPlayer()
     {
+        if(OnPlayerDeath != null)
+        {
+            OnPlayerDeath();
+        }
+
         if (speedrunMode)
         {
             Debug.Log("Respawn speedrun");
@@ -279,9 +306,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void SetSpeedrunMode(bool speedrunMode)
+    public void ToggleSpeedrunMode()
     {
-        this.speedrunMode = speedrunMode;
+        speedrunMode = !speedrunMode;
     }
 
     public void CancelJump()
