@@ -47,7 +47,7 @@ public class BossController2 : MonoBehaviour
             ticks++;
             timeSinceTick = 0;
 
-            // Projectile Attack
+            // Layer Change Attack
             if(ticks % ticksBetweenColorChange == 0)
             {
                 for(int i = 0; i < colorChangeCount; i++)

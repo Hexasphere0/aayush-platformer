@@ -19,7 +19,7 @@ public class TransformingBlock : MonoBehaviour
     {
         if (isTransforming)
         {
-            if(Time.time - transformingStartTime > transformingTime)
+            if(Time.time - transformingStartTime >= transformingTime)
             {
                 GetComponent<LayerChanger>().ChangeLayerNonWhite();
                 isTransforming = false;

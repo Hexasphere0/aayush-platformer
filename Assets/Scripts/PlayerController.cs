@@ -240,6 +240,7 @@ public class PlayerController : MonoBehaviour
     {
         if (speedrunMode)
         {
+            Debug.Log("Respawn speedrun");
             GameTimer.instance.Restart();
             HardRespawn();
             return;

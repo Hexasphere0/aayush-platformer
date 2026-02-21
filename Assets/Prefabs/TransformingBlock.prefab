@@ -170,7 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TransformingBlock
   innerBlock: {fileID: 4702609663883212819}
   isTransforming: 0
-  transformingTime: 2
+  transformingTime: 6
 --- !u!1001 &8738989318927663367
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -202,6 +202,10 @@ PrefabInstance:
     - target: {fileID: 8117634243669487820, guid: 23d3276b90ea0014981cafbc3963f5b6, type: 3}
       propertyPath: m_DrawMode
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8117634243669487820, guid: 23d3276b90ea0014981cafbc3963f5b6, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8634136174527371724, guid: 23d3276b90ea0014981cafbc3963f5b6, type: 3}
       propertyPath: m_LocalScale.x
