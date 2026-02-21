@@ -272,7 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200aa8cd9883d1540948fd1f499c8bf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  movementSpeed: 60
+  movementSpeed: 120
   maxWalkingSpeed: 12.5
   gravity: {x: 0, y: -44}
   groundedRaycastLength: 0.125
@@ -306,7 +306,7 @@ MonoBehaviour:
   wallJumpMovementFreezeTime: 0.3
   coyoteTime: 0.2
   jumpInputBufferTime: 0.15
-  clipJumpVelocityAdditionTime: 0.2
+  clipJumpVelocityAdditionTime: 0.1
   verticalPostClipVelocityMultiplier: 1.2
   horizontalPostClipVelocityMultiplier: 1.5
   minimumClippingDistance: 0.05
