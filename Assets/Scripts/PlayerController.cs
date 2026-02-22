@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
     private bool rightMovementFrozen { get; set; } = false;
     private bool frictionFrozen { get; set; } = false;
     private bool gravityFrozen { get; set; } = false;
+    
 
     new Rigidbody2D rigidbody;
     SpriteRenderer spriteRenderer;
@@ -55,6 +56,8 @@ public class PlayerController : MonoBehaviour
     InputAction zoomAction;
 
     bool speedrunMode;
+
+    private Vector2 lastFrictionTick = Vector2.zero;
 
     // Events
     public delegate void LayerChangeEvent();
@@ -122,6 +125,8 @@ public class PlayerController : MonoBehaviour
         if(frictionFrozen){
             friction = Vector2.zero;
         }
+
+        lastFrictionTick = friction;
 
         rigidbody.AddForce(friction, ForceMode2D.Impulse);
 
@@ -369,5 +374,10 @@ public class PlayerController : MonoBehaviour
     public void resetWallJump()
     {
         jump.resetWallJump();
+    }
+
+    public Vector2 getLastFrictionTick()
+    {
+        return lastFrictionTick;
     }
 }
