@@ -122,6 +122,7 @@ public class PlayerController : MonoBehaviour
 
         // Apply Friction
         Vector2 friction = getFriction(frictionAcceleration, dt, rigidbody.linearVelocity);
+
         if(frictionFrozen){
             friction = Vector2.zero;
         }
