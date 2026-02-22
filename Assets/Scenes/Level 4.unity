@@ -7809,7 +7809,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8864987805099879394, guid: f26afa75d08463d4abf4510a20440bd6, type: 3}
       propertyPath: respawnLayer
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
