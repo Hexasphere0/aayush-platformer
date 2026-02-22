@@ -8,11 +8,14 @@ public class CrumblingBlock : MonoBehaviour
 
     Collider2D blockCollider;
     SpriteRenderer spriteRenderer;
+    Color originalColor;
 
     void Start()
     {
         blockCollider = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        originalColor = spriteRenderer.color;
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
@@ -29,7 +32,6 @@ public class CrumblingBlock : MonoBehaviour
 
         blockCollider.enabled = false;
 
-        Color originalColor = spriteRenderer.color;
         spriteRenderer.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0);
 
         if(regenerationTime > 0){
@@ -43,7 +45,6 @@ public class CrumblingBlock : MonoBehaviour
 
         blockCollider.enabled = true;
 
-        Color originalColor = spriteRenderer.color;
-        spriteRenderer.color = new Color(originalColor.r, originalColor.g, originalColor.b, 100);
+        spriteRenderer.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0.5f);
     }
 }
