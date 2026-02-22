@@ -95,7 +95,6 @@ public class PlayerController : MonoBehaviour
 
         layerChangeAction.performed += LayerChange;
 
-        // aayush lowkey sucks at coding
         OnLayerChange += jump.OnLayerChange;
 
         InputSystem.actions.FindAction("KillPlayer").performed += KillPlayerInput;
@@ -169,6 +168,16 @@ public class PlayerController : MonoBehaviour
         movementFrozen = false;
     }
 
+    public void StopMovement()
+    {
+        movementFrozen = true;
+    }
+
+    public void UnstopMovement()
+    {
+        movementFrozen = false;
+    }
+
     public IEnumerator FreezeLeftMovement(float seconds)
     {
         leftMovementFrozen = true;
@@ -177,12 +186,33 @@ public class PlayerController : MonoBehaviour
         leftMovementFrozen = false;
 
     }
+
+    public void StopLeftMovement()
+    {
+        leftMovementFrozen = true;
+    }
+
+    public void UnstopLeftMovement()
+    {
+        leftMovementFrozen = false;
+    }
+
     public IEnumerator FreezeRightMovement(float seconds)
     {
         
         rightMovementFrozen = true;
 
         yield return new WaitForSeconds(seconds);
+        rightMovementFrozen = false;
+    }
+
+    public void StopRightMovement()
+    {
+        rightMovementFrozen = true;
+    }
+
+    public void UnstopRightMovement()
+    {
         rightMovementFrozen = false;
     }
 
@@ -195,11 +225,31 @@ public class PlayerController : MonoBehaviour
         frictionFrozen = false;
     }
 
+    public void StopFriction()
+    {
+        frictionFrozen = true;
+    }
+
+    public void UnstopFriction()
+    {
+        frictionFrozen = false;
+    }
+
     public IEnumerator FreezeGravity(float seconds)
     {
         gravityFrozen = true;
 
         yield return new WaitForSeconds(seconds);
+        gravityFrozen = false;
+    }
+
+    public void StopGravity()
+    {
+        gravityFrozen = true;
+    }
+
+    public void UnstopGravity()
+    {
         gravityFrozen = false;
     }
 
