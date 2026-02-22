@@ -49,7 +49,7 @@ public class WindTunnel : MonoBehaviour
         Vector2 windForce = windDirection * windStrength;
         rigidbody.AddForce(windForce, ForceMode2D.Force);
 
-        player.getFriction();
+        //player.getFriction();
 
     }
 }
