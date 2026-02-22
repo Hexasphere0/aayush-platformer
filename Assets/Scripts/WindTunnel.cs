@@ -10,12 +10,14 @@ public class WindTunnel : MonoBehaviour
     // Private Variables
     new Rigidbody2D rigidbody;
     PlayerController player;
+    float friction2;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         player = PlayerController.instance;
         rigidbody = player.GetComponent<Rigidbody2D>();
+        friction2 = player.frictionAcceleration;
     }
 
     
@@ -51,12 +53,13 @@ public class WindTunnel : MonoBehaviour
         rigidbody.AddForce(windForce, ForceMode2D.Force);
 
         //Remove friction in the direction of wind
-        Vector2 parrelelFrictionComponent = Vector2.Dot(player.getLastFrictionTick(), windDirection) * windDirection;
+        Vector2 friction = player.getLastFrictionTick();
 
-        if(Vector2.Dot(parrelelFrictionComponent, windDirection) < 0)
+        if(Vector2.Dot(friction, windDirection) > 0)
         {
-            rigidbody.AddForce(-parrelelFrictionComponent, ForceMode2D.Impulse);
-        }
+            friction = Vector2.zero;
 
+        }
+        rigidbody.AddForce(-friction, ForceMode2D.Impulse);
     }
 }
